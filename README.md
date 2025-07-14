@@ -60,26 +60,30 @@ Este proyecto es una aplicación web desarrollada con Django para optimizar el r
    python manage.py migrate
    python manage.py runserver
    ```
-Proyecto Vidanova:
-Espacio virtual: python -m venv virtual
-Acceder: virtual/Scripts/activate
-Instalar Django: python -m pip install django
-Forma de ver la versión de django: python  
+🛠️Guía Básica del Proyecto VidaNova en Django
+📁 1. Crear entorno virtual: python -m venv virtual
+📁2. Activar el entorno virtual En Windows:virtual\Scripts\activate
+🐍 3. Instalar Django: python -m pip (install django: pip install django)
+🔎 4. Verificar la versión de Django
+Opción 1: python
 >>> import django
 >>> print(django.get_version())
 >>> quit()
-Otro forma: python -m django --version
-crear proyecto: django-admin startproject vida_nova
-Entrar a la carpeta: cd vida_nova
-Para correr el proyecto: python manage.py runserver
-Crear archivo views.py en la carpeta vidanova:
+Opción 2: python -m django --version
+🚧 5. Crear el proyecto Django: 
+django-admin startproject vida_nova
+cd vida_nova
+🚀 6. Ejecutar el servidor: python manage.py runserver.
+Abre en el navegador: http://127.0.0.1:8000
+📄 7. Crear archivo views.py (dentro de la carpeta vida_nova)
 from django.http import HttpResponse
 def homepage(requess):
     return HttpResponse("Hola amegis de vidanova!")
 def about(request):
     return HttpResponse("Esta es la pagina de acerca de vidanova!")
 
-13. La página principal va con views. homepages
+🌐 8. Configurar las rutas en urls.py (archivo dentro de la carpeta vida_nova):
+Nota:La página principal va con view.homepages
 y abouts/ va con view.abouts
 
 from django.contrib import admin
@@ -93,9 +97,14 @@ urlpatterns = [
     path('about/',view.about),
 ]
 
-para correr el programa nuevamente refresca la página o ejecuta python runserver y para cargar  la vista abouts se pone(/about/)
-
-14. configiras settings.py en el apartado templates, en dirs: poner templates
+📌 Accede a:
+Página principal → http://127.0.0.1:8000/
+Página “acerca de” → http://127.0.0.1:8000/about/
+Nota:Para correr el programa nuevamente refresca la página o ejecuta python runserver y para cargar  la vista abouts se pone(/about/)
+🧱 9. Configurar settings.py para usar la carpeta de templates
+En settings.py, busca la sección de TEMPLATES y modifica así:
+'DIRS': [BASE_DIR / 'templates'],
+Esto permitirá usar una carpeta templates/ para tus archivos HTML personalizados.
 
 ---
 
