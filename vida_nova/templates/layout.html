@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>
+        {% block title%}
+        Vidanova
+        {% endblock %}
+    </title>
+</head>
+<body>
+    <div class="side-menu">
+        <div>
+            <h1>Vidanova</h1>
+            
+        </div>
+        <nav class="sidebar">
+            <ul>
+                <li><i class="bx bxs-dashboard"></i>&nbsp;<samp>Talero</samp></li>
+                <li><i class="bx bxs-graduation"></i>&nbsp;<samp>Segimento</samp></li>
+                <li><i class="bx bxs-book-reader"></i>&nbsp;<samp>Funcion</samp></li>
+                <li><i class="bx bxs-school"></i>&nbsp;<samp>Funcion</samp></li>
+                <li><i class="bx bx-money-withdraw"></i>&nbsp;<samp>Ayuda</samp></li>
+                <li><i class="bx bx-cog"></i>&nbsp;<samp>Ajustes</samp></li>
+            </ul>
+        </nav>
+        <menu class="content">
+            <h1>Bienvenido a vidanova</h1>
+            <p>Este es el munu que contien el area</p>
+        </menu>
+    </div>
+</body>
+</html>
