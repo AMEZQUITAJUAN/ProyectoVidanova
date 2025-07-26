@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <title>Login</title>
+</head>
+<body>
+    <h2>IPS Vidanova</h2>
+<div class="container" id='container'>
+    <div class="form-container sign-up-container">
+        <form action="#">
+            <h1>Crea una cuenta</h1>
+            <div class="social-container">
+                <a href="#" class="social"><i class="feb fa-facebook-f"></i></a>
+                <a href="#" class="social"><i class="feb fa-google-plus-g"></i></a>
+                <a href="#" class="social"><i class="feb fa-linkedin-in"></i></a>
+            </div>
+            <span>o use su email para registrarse</span>
+            <input type="text" placeholder="Nombre" />
+            <input type="email" placeholder="Email" />
+            <input type="password" placeholder="Contraseña" />
+            <button>Registrarse</button>
+        </form>
+    </div>
+    <div class="form-container sign-in-container">
+    <form action="#">
+        <h1>Ingreso</h1>
+        <div class="social-container">
+            <a href="#" class="social"><i class="feb fa-facebook-f"></i></a>
+            <a href="#" class="social"><i class="feb fa-google-plus-g"></i></a>
+            <a href="#" class="social"><i class="feb fa-linkedin-in"></i></a>
+        </div>
+        <span>o use su cuenta</span>
+        <input type="email" placeholder="Email" />
+        <input type="password" placeholder="Contraseña" />
+        <a href="#">¿Olvidó su contraseña?</a>
+        <button>Ingreso</button>
+    </form>
+</div>
+<div class="overlay-container">
+    <div class="overlay">
+        <div class="overlay-panel overlay-left">
+            <h1>Bienvenido de nuevo</h1>
+            <p>Use sus credenciales para acceder</p>
+            <button class="ghost" id="signIn">Ingreso</button>
+        </div>
+        <div class="overlay-panel overlay-right">
+            <h1>Hola, amigo</h1>
+            <p>Ingrese algunos datos suyos por favor</p>
+            <button class="ghost" id="signUp">Registrarse</button>
+        </div>
+    </div>
+</div>
+</div>
+<footer>
+    <p>
+        Create with <i class="feb fa-heart"></i> by Juan Jose
+        <a target="_blank" href="http://">Florin pop</a>
+        - read how I created this and how you can join the challenge
+        <a target="_blank" href="https://www.florin-pop.com/blog/2020/05/30/50-projects-50-days-day-1/">here</a>
+    </p>
+</footer>
+</body>
+</html>
