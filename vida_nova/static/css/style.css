@@ -21,16 +21,16 @@ h3{
     color: #999;
 }
 .btn{
-    background: #f05462;
+    background: #2f5f98;
     color: white;
     padding: 5px 10px;
     text-align: center;
 }
 .btn:hover{
-    color: #f05462;
+    color: #2f5f98;
     background: white;
     padding: 3px 8px;
-    border: 2px solid #f05462;
+    border: 2px solid #2f5f98;
 }
 .title{
     display: flex;
@@ -48,7 +48,7 @@ th,td{
 }
 .side-menu{
     position: fixed;
-    background: #f05462;
+    background: #2f5f98;
     width: 20vw;
     min-height: 100vw;
     display: flex;
@@ -69,7 +69,7 @@ th,td{
 }
 .side-menu li:hover{
     background: white;
-    color: #f05462;
+    color: #2f5f98;
 }
 .container{
     position: absolute;
