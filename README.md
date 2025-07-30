@@ -1,5 +1,4 @@
-# VidaNova - Sistema de Gestión para Call Center Oncológico
-
+# VidaNova -
 **Repositorio del sistema web desarrollado para la IPS VidaNova**, diseñado para optimizar el registro, seguimiento y gestión de datos de pacientes oncológicos, con integración a la plataforma externa SIISA y un tablero de control para supervisores y agentes.
 
 ## 🚀 Características Principales
