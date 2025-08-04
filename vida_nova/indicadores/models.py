@@ -22,3 +22,20 @@ class Patient(models.Model):
     city_of_residence = models.CharField(max_length=100)
     age = models.IntegerField()
     vital_status = models.CharField(max_length=10)
+
+    class MedicalRequest(models.Model):
+    case_type = models.CharField(max_length=100)                # Tipo de Caso
+    intake_date = models.DateField()                            # Fecha de captación
+    procedure_type = models.CharField(max_length=100)           # Tipo de procedimiento
+    request_status = models.CharField(max_length=100)           # Estado de la solicitud
+    request_date = models.DateField()                           # Fecha de solicitud
+    appointment_date = models.DateField()                       # Fecha de cita
+    provider = models.CharField(max_length=150)                 # Prestador
+    barrier = models.TextField(blank=True, null=True)           # Barrera (zona rural, transporte, etc.)
+    observations = models.TextField(blank=True, null=True)      # Observaciones
+    timeliness = models.IntegerField()                          # Oportunidad (días entre solicitud y cita, por ejemplo)
+    care_pathway = models.CharField(max_length=100)             # Ruta
+    month = models.CharField(max_length=20)                     # Mes
+
+    def __str__(self):
+        return f"{self.case_type} - {self.intake_date}"
