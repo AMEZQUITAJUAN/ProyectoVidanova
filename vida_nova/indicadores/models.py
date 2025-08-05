@@ -24,7 +24,7 @@ class Patient(models.Model):
     vital_status = models.CharField(max_length=10)
 
     class MedicalRequest(models.Model):
-    case_type = models.CharField(max_length=100)                # Tipo de Caso
+        case_type = models.CharField(max_length=100)                # Tipo de Caso
     intake_date = models.DateField()                            # Fecha de captación
     procedure_type = models.CharField(max_length=100)           # Tipo de procedimiento
     request_status = models.CharField(max_length=100)           # Estado de la solicitud
