@@ -8,4 +8,6 @@ urlpatterns = [
     path('home/', view.homepage),
     path('about/',view.about),
     path('board/', include('indicadores.urls')),
+    path('search/', include('search.urls')),
+    path('grid/', include('grid_search.urls')),
 ]
