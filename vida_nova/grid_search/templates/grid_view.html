@@ -4,38 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/grid.css' %}">
 </head>
 <body>
-    <table>
-        <thead>
-            <tr>
-                <th>Nombres</th>
-                <th>Edad</th>
-                <th>Cedula</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for obj in page_obj %}
-            <tr>
-                <td>{{ obj.name }}</td>
-                <td>{{ obj.age }}</td>
-                <td>{{ obj.nid }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <div>
-        <span>
-            Pagina {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-        </span>
-        {% if page_obj.has_previous %}
-        <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
-        {% endif %}
-        {% if page_obj.has_next %}
-        {% endif %}
-        {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}"></a>
-        {% endif %}
-    </div>
+    <main class="main-content">
+        <section class="table-section">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Nombres</th>
+                        <th>Edad</th>
+                        <th>Cédula</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for obj in page_obj %}
+                    <tr>
+                        <td>{{ obj.name }}</td>
+                        <td>{{ obj.age }}</td>
+                        <td>{{ obj.nid }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3">No hay datos para mostrar.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+        <nav class="pagination" aria-label="Paginación">
+            <span class="page-info">
+                Página <strong>{{ page_obj.number }}</strong> de <strong>{{ page_obj.paginator.num_pages }}</strong>
+            </span>
+            {% if page_obj.has_previous %}
+                <a class="page-link prev" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+            {% else %}
+                <span class="page-link prev disabled" aria-disabled="true">Anterior</span>
+            {% endif %}
+            {% if page_obj.has_next %}
+                <a class="page-link next" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+            {% else %}
+                <span class="page-link next disabled" aria-disabled="true">Siguiente</span>
+            {% endif %}
+        </nav>
+    </main>
 </body>
 </html>
