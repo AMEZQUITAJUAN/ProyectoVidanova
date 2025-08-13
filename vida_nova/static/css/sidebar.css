@@ -1,0 +1,252 @@
+/* =================================
+   SIDEBAR CON EFECTO HOVER - VIDANOVA
+   ================================= */
+
+.side-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 80px; /* Ancho colapsado (solo íconos) */
+    height: 100vh;
+    background: linear-gradient(135deg, #2c5aa0 0%, #1e3a5f 100%);
+    transition: width 0.3s ease-in-out;
+    overflow: hidden;
+    z-index: 1000;
+    box-shadow: 3px 0 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Expandir sidebar al hacer hover */
+.side-menu:hover {
+    width: 280px; /* Ancho expandido */
+}
+
+/* =================================
+   HEADER DE LA SIDEBAR
+   ================================= */
+
+.sidebar-header {
+    padding: 20px 0;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+}
+
+.sidebar-header__logo {
+    color: white;
+    font-size: 24px;
+    font-weight: 300;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.3s ease-in-out;
+}
+
+.sidebar-header__logo span {
+    color: #ffd700;
+}
+
+.sidebar-header__logo strong {
+    font-weight: 700;
+    color: #ff6b6b;
+}
+
+/* Mostrar logo al hacer hover */
+.side-menu:hover .sidebar-header__logo {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* =================================
+   NAVEGACIÓN
+   ================================= */
+
+.sidebar {
+    padding: 0;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar li {
+    position: relative;
+    margin: 5px 0;
+    cursor: pointer;
+    border-radius: 0 25px 25px 0;
+    transition: all 0.3s ease-in-out;
+}
+
+.sidebar li:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+.sidebar li a,
+.sidebar li {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Íconos */
+.sidebar li i {
+    font-size: 24px;
+    min-width: 40px;
+    text-align: center;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+.sidebar li:hover i {
+    color: #ffd700;
+    transform: scale(1.1);
+}
+
+/* Texto de los enlaces */
+.sidebar li samp {
+    margin-left: 15px;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.3s ease-in-out;
+    font-weight: 500;
+}
+
+/* Mostrar texto al hacer hover en la sidebar */
+.side-menu:hover .sidebar li samp {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Efecto de tooltip para cuando está colapsada */
+.sidebar li::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 80px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+    z-index: 1001;
+}
+
+.sidebar li:hover::before {
+    opacity: 1;
+}
+
+/* Ocultar tooltip cuando la sidebar está expandida */
+.side-menu:hover .sidebar li::before {
+    opacity: 0;
+}
+
+/* =================================
+   CONTENIDO PRINCIPAL
+   ================================= */
+
+.content {
+    margin-left: 80px; /* Margen igual al ancho colapsado */
+    padding: 30px;
+    transition: margin-left 0.3s ease-in-out;
+    min-height: 100vh;
+    background: #f8f9fa;
+}
+
+.content h1 {
+    color: #333;
+    font-size: 28px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.content p {
+    color: #666;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* =================================
+   RESPONSIVE DESIGN
+   ================================= */
+
+@media (max-width: 768px) {
+    .side-menu {
+        width: 0;
+        overflow: hidden;
+    }
+    
+    .side-menu:hover {
+        width: 250px;
+    }
+    
+    .content {
+        margin-left: 0;
+    }
+    
+    /* Botón hamburguesa para móvil (opcional) */
+    .menu-toggle {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1002;
+        background: #667eea;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 20px;
+    }
+}
+
+/* =================================
+   ANIMACIONES ADICIONALES
+   ================================= */
+
+/* Efecto de entrada escalonado para los elementos del menú */
+.side-menu:hover .sidebar li:nth-child(1) samp { transition-delay: 0.1s; }
+.side-menu:hover .sidebar li:nth-child(2) samp { transition-delay: 0.15s; }
+.side-menu:hover .sidebar li:nth-child(3) samp { transition-delay: 0.2s; }
+.side-menu:hover .sidebar li:nth-child(4) samp { transition-delay: 0.25s; }
+.side-menu:hover .sidebar li:nth-child(5) samp { transition-delay: 0.3s; }
+.side-menu:hover .sidebar li:nth-child(6) samp { transition-delay: 0.35s; }
+
+/* Indicador de elemento activo */
+.sidebar li.active {
+    background: rgba(255, 255, 255, 0.2);
+    border-right: 4px solid #ffd700;
+}
+
+.sidebar li.active i {
+    color: #ffd700;
+}
+
+/* Scroll personalizado para la sidebar */
+.side-menu::-webkit-scrollbar {
+    width: 6px;
+}
+
+.side-menu::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.side-menu::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.side-menu::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}

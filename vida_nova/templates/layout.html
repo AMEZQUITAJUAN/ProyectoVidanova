@@ -1,40 +1,84 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/medical-ui-kit.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
     <title>
         {% block title%}
         Vidanova
         {% endblock %}
     </title>
 </head>
-<body><!-- Left Sidebar -->
+<body>
+    <!-- Left Sidebar -->
     <div class="side-menu">    
         <div>
-            <h1>Vidanova</h1> 
-            
+            <header class="sidebar-header">
+                <h1 class="sidebar-header__logo">Vida<span>No<strong>va</strong></span></h1>
+            </header>
         </div>
         <nav class="sidebar">
             <ul>
-                <li><i class="bx bxs-dashboard"></i>&nbsp;<samp>Tablado de Control</samp></li>
-                <li><i class="bx bxs-graduation"></i>&nbsp;<samp>Pacientes</samp></li>
-                <li><i class="bx bxs-book-reader"></i>&nbsp;<samp>Citas </samp></li>
-                <li><i class="bx bxs-school"></i>&nbsp;<samp>Doctores</samp></li>
-                <li><i class="bx bx-money-withdraw"></i>&nbsp;<samp>Ayuda</samp></li>
-                <li><i class="bx bx-cog"></i>&nbsp;<samp>Ajustes</samp></li>
+                <li class="active" data-tooltip="Dashboard">
+                    <i class="bx bxs-dashboard"></i>
+                    <samp>Dashboard</samp>
+                </li>
+                <li data-tooltip="Pacientes">
+                    <i class="bx bxs-graduation"></i>
+                    <samp>Pacientes</samp>
+                </li>
+                <li data-tooltip="Citas">
+                    <i class="bx bxs-book-reader"></i>
+                    <samp>Citas</samp>
+                </li>
+                <li data-tooltip="Doctores">
+                    <i class="bx bxs-school"></i>
+                    <samp>Doctores</samp>
+                </li>
+                <li data-tooltip="Ayuda">
+                    <i class="bx bx-money-withdraw"></i>
+                    <samp>Ayuda</samp>
+                </li>
+                <li data-tooltip="Ajustes">
+                    <i class="bx bx-cog"></i>
+                    <samp>Ajustes</samp>
+                </li>
             </ul>
         </nav>
-        <menu class="content">
-            <h1>Bienvenido a vidanova</h1>
-            <p>Este es el menu que contiene el area</p>
-        </menu>
     </div>
-    {% block content %}
-    {% endblock %}
+
+    <!-- Contenido Principal -->
+    <main class="content">
+        <h1>Bienvenido a Vidanova</h1>
+        <p>Este es el contenido principal de tu aplicación médica.</p>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Botón hamburguesa para móvil (opcional) -->
+    <button class="menu-toggle" onclick="toggleSidebar()">
+        <i class="bx bx-menu"></i>
+    </button>
+
+    <script>
+        // JavaScript opcional para funcionalidad adicional
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.side-menu');
+            sidebar.classList.toggle('mobile-open');
+        }
+
+        // Agregar clase active al elemento clickeado
+        document.querySelectorAll('.sidebar li').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.sidebar li').forEach(li => li.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
 </body>
 </html>
