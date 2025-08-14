@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/grid.css' %}">
+    <link rel="stylesheet" href="{% static 'css/' %}">
 </head>
 <body>
     <main class="main-content">
@@ -16,6 +16,16 @@
                         <th>Nombres</th>
                         <th>Edad</th>
                         <th>Cédula</th>
+                        <th>🗂️ Tipo de Caso</th>
+                        <th>⚙️ Tipo de Procedimiento</th>
+                        <th>⏳ Estado de la Solicitud</th>
+                        <th>📅 Fecha de Solicitud</th>
+                        <th>📅 Fecha de Cita Programada</th>
+                        <th>🏢 Prestador del Servicio</th>
+                        <th>🚧 Barreras Identificadas</th>
+                        <th>📝 Observaciones Relevantes</th>
+                        <th>🗺️ Ruta Asistencial</th>
+                        <th>🗓️ Mes de Registro</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,10 +34,20 @@
                         <td>{{ obj.name }}</td>
                         <td>{{ obj.age }}</td>
                         <td>{{ obj.nid }}</td>
+                        <td>{{ obj.tipo_caso }}</td>
+                        <td>{{ obj.tipo_procedimiento }}</td>
+                        <td>{{ obj.estado_solicitud }}</td>
+                        <td>{{ obj.fecha_solicitud }}</td>
+                        <td>{{ obj.fecha_cita }}</td>
+                        <td>{{ obj.prestador_servicio }}</td>
+                        <td>{{ obj.barreras_identificadas }}</td>
+                        <td>{{ obj.observaciones_relevantes }}</td>
+                        <td>{{ obj.ruta_asistencial }}</td>
+                        <td>{{ obj.mes_registro }}</td>
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="3">No hay datos para mostrar.</td>
+                        <td colspan="13">No hay datos para mostrar.</td>
                     </tr>
                     {% endfor %}
                 </tbody>

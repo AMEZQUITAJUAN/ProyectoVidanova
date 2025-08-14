@@ -1,56 +1,338 @@
-.main-content {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+/* Reset y configuración base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+}
+
+/* Contenedor principal */
+.main-content {
+    max-width: 100%;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+/* Sección de la tabla */
+.table-section {
+    overflow-x: auto;
+    margin: 20px;
+}
+
+/* Estilos de la tabla */
 .data-table {
     width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    min-width: 1400px; /* Ancho mínimo para acomodar todas las columnas */
 }
 
-.data-table th, .data-table td {
-    border: 1px solid #ddd;
-    padding: 10px 8px;
+/* Encabezados de la tabla */
+.data-table thead th {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    color: white;
+    padding: 16px 12px;
     text-align: left;
+    font-weight: 600;
+    font-size: 14px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-bottom: 2px solid #3730a3;
+    white-space: nowrap;
+    min-width: 120px;
 }
 
-.data-table th {
-    background: #2f5f98;
-    color: #fff;
+/* Estilos específicos por columna */
+.data-table thead th:nth-child(1) { /* Nombres */
+    min-width: 180px;
 }
 
-.data-table tr:nth-child(even) {
-    background: #f9f9f9;
+.data-table thead th:nth-child(2) { /* Edad */
+    min-width: 80px;
+    text-align: center;
 }
 
+.data-table thead th:nth-child(3) { /* Cédula */
+    min-width: 140px;
+}
+
+.data-table thead th:nth-child(4) { /* Tipo de Caso */
+    min-width: 150px;
+}
+
+.data-table thead th:nth-child(5) { /* Tipo de Procedimiento */
+    min-width: 180px;
+}
+
+.data-table thead th:nth-child(6) { /* Estado de la Solicitud */
+    min-width: 160px;
+}
+
+.data-table thead th:nth-child(7), 
+.data-table thead th:nth-child(8) { /* Fechas */
+    min-width: 140px;
+}
+
+.data-table thead th:nth-child(9) { /* Prestador del Servicio */
+    min-width: 200px;
+}
+
+.data-table thead th:nth-child(10) { /* Barreras Identificadas */
+    min-width: 180px;
+}
+
+.data-table thead th:nth-child(11) { /* Observaciones Relevantes */
+    min-width: 200px;
+}
+
+.data-table thead th:nth-child(12) { /* Ruta Asistencial */
+    min-width: 150px;
+}
+
+.data-table thead th:nth-child(13) { /* Mes de Registro */
+    min-width: 130px;
+}
+
+/* Primera y última columna del header */
+.data-table thead th:first-child {
+    border-top-left-radius: 12px;
+}
+
+.data-table thead th:last-child {
+    border-top-right-radius: 12px;
+}
+
+/* Celdas del cuerpo de la tabla */
+.data-table tbody td {
+    padding: 14px 12px;
+    border-bottom: 1px solid #e5e7eb;
+    background: white;
+    vertical-align: top;
+    font-size: 14px;
+    line-height: 1.5;
+    word-wrap: break-word;
+    max-width: 250px;
+}
+
+/* Alineación específica para edad */
+.data-table tbody td:nth-child(2) {
+    text-align: center;
+    font-weight: 600;
+    color: #4f46e5;
+}
+
+/* Celdas de fechas */
+.data-table tbody td:nth-child(7),
+.data-table tbody td:nth-child(8) {
+    font-family: 'Courier New', monospace;
+    color: #059669;
+    font-weight: 500;
+}
+
+/* Hover effect en filas */
+.data-table tbody tr:hover {
+    background: linear-gradient(90deg, #f8fafc 0%, #e2e8f0 100%);
+    transform: scale(1.01);
+    transition: all 0.2s ease;
+}
+
+/* Filas alternadas */
+.data-table tbody tr:nth-child(even) {
+    background: #f9fafb;
+}
+
+.data-table tbody tr:nth-child(even):hover {
+    background: linear-gradient(90deg, #f1f5f9 0%, #e2e8f0 100%);
+}
+
+/* Mensaje cuando no hay datos */
+.data-table tbody tr td[colspan] {
+    text-align: center;
+    color: #6b7280;
+    font-style: italic;
+    padding: 40px;
+    background: #f9fafb;
+}
+
+/* Paginación */
 .pagination {
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 10px;
-    justify-content: flex-end;
+    gap: 20px;
+    padding: 30px;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border-top: 1px solid #e5e7eb;
+}
+
+.page-info {
+    color: #4b5563;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.page-info strong {
+    color: #4f46e5;
 }
 
 .page-link {
-    padding: 6px 14px;
-    border-radius: 4px;
-    background: #2f5f98;
-    color: #fff;
+    padding: 12px 24px;
+    border-radius: 8px;
     text-decoration: none;
-    transition: background 0.2s;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
 }
 
-.page-link:hover:not(.disabled) {
-    background: #1d3c5a;
+.page-link:not(.disabled) {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
 }
 
-.page-link.disabled, .page-link[aria-disabled=\"true\"] {
-    background: #ccc;
-    color: #888;
+.page-link:not(.disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.4);
+    background: linear-gradient(135deg, #4338ca 0%, #6d28d9 100%);
+}
+
+.page-link.disabled {
+    background: #e5e7eb;
+    color: #9ca3af;
     cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Scrollbar personalizado */
+.table-section::-webkit-scrollbar {
+    height: 8px;
+}
+
+.table-section::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 4px;
+}
+
+.table-section::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #4f46e5, #7c3aed);
+    border-radius: 4px;
+}
+
+.table-section::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(90deg, #4338ca, #6d28d9);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .main-content {
+        margin: 10px;
+        border-radius: 12px;
+    }
+    
+    .table-section {
+        margin: 10px;
+    }
+    
+    .data-table {
+        font-size: 13px;
+    }
+    
+    .data-table thead th,
+    .data-table tbody td {
+        padding: 12px 8px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    .data-table {
+        font-size: 12px;
+    }
+    
+    .data-table thead th,
+    .data-table tbody td {
+        padding: 10px 6px;
+    }
+    
+    .pagination {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .page-link {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+}
+
+/* Animaciones */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.data-table {
+    animation: slideIn 0.6s ease-out;
+}
+
+/* Estados especiales para ciertas columnas */
+.data-table tbody td:nth-child(6) { /* Estado de la Solicitud */
+    font-weight: 600;
+}
+
+.data-table tbody td:nth-child(10) { /* Barreras Identificadas */
+    color: #dc2626;
+    font-weight: 500;
+}
+
+.data-table tbody td:nth-child(11) { /* Observaciones Relevantes */
+    color: #059669;
+    font-style: italic;
+}
+
+/* Indicador de scroll horizontal */
+.table-section::after {
+    content: "← Desliza horizontalmente para ver más columnas →";
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(79, 70, 229, 0.9);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    opacity: 0.8;
     pointer-events: none;
+}
+
+@media (min-width: 1400px) {
+    .table-section::after {
+        display: none;
+    }
 }
