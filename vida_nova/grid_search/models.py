@@ -7,9 +7,6 @@ class MedicalRequest(models.Model):
         on_delete=models.CASCADE,
         related_name='medical_requests'
     )
-    request_date = models.DateField()
-    request_type = models.CharField(max_length=100)
-    status = models.CharField(max_length=50)
 
     class Meta:
         verbose_name = "Medical Request"

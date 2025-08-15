@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import MedicalRequest, Patient,Board
+from .models import MedicalRequest, Patient
 
 @admin.register(MedicalRequest)
 class MedicalRequestAdmin(admin.ModelAdmin):
@@ -16,4 +16,3 @@ class PatientAdmin(admin.ModelAdmin):
     search_fields = ("first_name", "last_name", "identification", "city")
     list_filter = ("city",)
     
-admin.site.register(Board)
