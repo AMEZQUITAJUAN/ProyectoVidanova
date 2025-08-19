@@ -1,32 +1,59 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700,800');
 
 * {
 	box-sizing: border-box;
 }
 
 body {
-	background: #f6f5f7;
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
 	font-family: 'Montserrat', sans-serif;
 	height: 100vh;
-	margin: -20px 0 50px;
+	margin: 0;
+	padding: 20px 0;
 }
 
-h1 {
-	font-weight: bold;
+/* =================================
+   HEADER CON LOGO
+   ================================= */
+.header-logo {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 30px;
+	gap: 15px;
+}
+
+.logo-img {
+	width: 60px;
+	height: 60px;
+	object-fit: contain;
+	filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+.header-logo h2 {
+	color: white;
+	font-size: 32px;
+	font-weight: 700;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 	margin: 0;
 }
 
-h2 {
-	text-align: center;
+/* =================================
+   ESTILOS GENERALES
+   ================================= */
+h1 {
+	font-weight: 700;
+	margin: 0;
+	color: #333;
 }
 
 p {
 	font-size: 14px;
-	font-weight: 100;
+	font-weight: 400;
 	line-height: 20px;
 	letter-spacing: 0.5px;
 	margin: 20px 0 30px;
@@ -34,6 +61,7 @@ p {
 
 span {
 	font-size: 12px;
+	color: #666;
 }
 
 a {
@@ -41,23 +69,48 @@ a {
 	font-size: 14px;
 	text-decoration: none;
 	margin: 15px 0;
+	transition: color 0.3s ease;
 }
 
+a:hover {
+	color: #8f4392;
+}
+
+.forgot-password {
+	color: #8f4392;
+	font-weight: 600;
+}
+
+.forgot-password:hover {
+	color: #6d2d70;
+	text-decoration: underline;
+}
+
+/* =================================
+   BOTONES
+   ================================= */
 button {
-	border-radius: 20px;
+	border-radius: 25px;
 	border: 1px solid #8f4392;
-	background-color: #8f4392;
+	background: linear-gradient(135deg, #8f4392 0%, #a855a8 100%);
 	color: #FFFFFF;
 	font-size: 12px;
-	font-weight: bold;
+	font-weight: 700;
 	padding: 12px 45px;
 	letter-spacing: 1px;
 	text-transform: uppercase;
-	transition: transform 80ms ease-in;
+	transition: all 0.3s ease;
+	cursor: pointer;
+	box-shadow: 0 4px 15px rgba(143, 67, 146, 0.3);
+}
+
+button:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 6px 20px rgba(143, 67, 146, 0.4);
 }
 
 button:active {
-	transform: scale(0.95);
+	transform: translateY(0);
 }
 
 button:focus {
@@ -65,10 +118,20 @@ button:focus {
 }
 
 button.ghost {
-	background-color: transparent;
-	border-color: #FFFFFF;
+	background: transparent;
+	border: 2px solid #FFFFFF;
+	color: #FFFFFF;
+	box-shadow: none;
 }
 
+button.ghost:hover {
+	background: rgba(255, 255, 255, 0.1);
+	transform: translateY(-2px);
+}
+
+/* =================================
+   FORMULARIOS
+   ================================= */
 form {
 	background-color: #FFFFFF;
 	display: flex;
@@ -80,24 +143,56 @@ form {
 	text-align: center;
 }
 
+.form-logo {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+.form-logo-img {
+	width: 50px;
+	height: 50px;
+	object-fit: contain;
+	margin-bottom: 10px;
+	filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
 input {
-	background-color: #eee;
-	border: none;
+	background-color: #f6f6f6;
+	border: 2px solid transparent;
+	border-radius: 10px;
 	padding: 12px 15px;
 	margin: 8px 0;
 	width: 100%;
+	font-size: 14px;
+	transition: all 0.3s ease;
 }
 
+input:focus {
+	outline: none;
+	border-color: #8f4392;
+	background-color: #fff;
+	box-shadow: 0 0 0 3px rgba(143, 67, 146, 0.1);
+}
+
+input::placeholder {
+	color: #999;
+}
+
+/* =================================
+   CONTENEDOR PRINCIPAL
+   ================================= */
 .container {
 	background-color: #fff;
-	border-radius: 10px;
-  	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
-			0 10px 10px rgba(0,0,0,0.22);
+	border-radius: 15px;
+  	box-shadow: 0 20px 40px rgba(0,0,0,0.2), 
+			0 15px 25px rgba(0,0,0,0.15);
 	position: relative;
 	overflow: hidden;
 	width: 768px;
 	max-width: 100%;
-	min-height: 480px;
+	min-height: 500px;
 }
 
 .form-container {
@@ -143,6 +238,9 @@ input {
 	}
 }
 
+/* =================================
+   OVERLAY
+   ================================= */
 .overlay-container {
 	position: absolute;
 	top: 0;
@@ -159,9 +257,7 @@ input {
 }
 
 .overlay {
-	background: #FF416C;
-	background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
-	background: linear-gradient(to right, #0F2D47, #2f5f98);
+	background: linear-gradient(135deg, #2c5aa0 0%, #1e3a5f 100%);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: 0 0;
@@ -193,6 +289,21 @@ input {
 	transition: transform 0.6s ease-in-out;
 }
 
+.overlay-content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+}
+
+.overlay-logo {
+	width: 60px;
+	height: 60px;
+	object-fit: contain;
+	margin-bottom: 20px;
+	filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
 .overlay-left {
 	transform: translateX(-20%);
 }
@@ -210,6 +321,9 @@ input {
 	transform: translateX(20%);
 }
 
+/* =================================
+   REDES SOCIALES
+   ================================= */
 .social-container {
 	margin: 20px 0;
 }
@@ -223,29 +337,97 @@ input {
 	margin: 0 5px;
 	height: 40px;
 	width: 40px;
+	transition: all 0.3s ease;
+	color: #666;
 }
 
+.social-container a:hover {
+	background: linear-gradient(135deg, #8f4392 0%, #a855a8 100%);
+	border-color: #8f4392;
+	color: white;
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(143, 67, 146, 0.3);
+}
+
+/* =================================
+   FOOTER
+   ================================= */
 footer {
-    background-color: #222;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
     color: #fff;
-    font-size: 14px;
-    bottom: 0;
+    font-size: 12px;
     position: fixed;
+    bottom: 0;
     left: 0;
     right: 0;
     text-align: center;
     z-index: 999;
+    padding: 10px 0;
 }
 
 footer p {
-    margin: 10px 0;
-}
-
-footer i {
-    color: red;
+    margin: 5px 0;
 }
 
 footer a {
-    color: #3c97bf;
+    color: #8f4392;
     text-decoration: none;
+    font-weight: 600;
+}
+
+footer a:hover {
+    color: #a855a8;
+    text-decoration: underline;
+}
+
+/* =================================
+   RESPONSIVE DESIGN
+   ================================= */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        min-height: 600px;
+    }
+    
+    .header-logo {
+        margin-bottom: 20px;
+    }
+    
+    .header-logo h2 {
+        font-size: 24px;
+    }
+    
+    .logo-img {
+        width: 40px;
+        height: 40px;
+    }
+    
+    form {
+        padding: 0 30px;
+    }
+    
+    .overlay-panel {
+        padding: 0 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    
+    .container {
+        width: 100%;
+        border-radius: 10px;
+    }
+    
+    .header-logo {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    form {
+        padding: 0 20px;
+    }
 }

@@ -1,67 +1,100 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
-    <title>Login</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Login - Vidanova</title>
 </head>
 <body>
-    <h2>IPS Vidanova</h2>
-<div class="container" id='container'>
-    <div class="form-container sign-up-container">
-        <form action="#">
-            <h1>Crea una cuenta</h1>
-            <div class="social-container">
-                <a href="#" class="social"><i class="feb fa-facebook-f"></i></a>
-                <a href="#" class="social"><i class="feb fa-google-plus-g"></i></a>
-                <a href="#" class="social"><i class="feb fa-linkedin-in"></i></a>
+    <!-- Header con Logo -->
+    <div class="header-logo">
+        <img src="{% static 'media/logovidanova1.webp' %}" alt="Vidanova Logo" class="logo-img">
+        <h2>IPS Vidanova</h2>
+    </div>
+
+    <div class="container" id='container'>
+        <div class="form-container sign-up-container">
+            <form action="#">
+                <div class="form-logo">
+                    <img src="{% static 'media/logovidanova1.webp' %}" alt="Vidanova" class="form-logo-img">
+                    <h1>Crea una cuenta</h1>
+                </div>
+                <div class="social-container">
+                    <a href="#" class="social"><i class="bx bxl-facebook"></i></a>
+                    <a href="#" class="social"><i class="bx bxl-google"></i></a>
+                    <a href="#" class="social"><i class="bx bxl-linkedin"></i></a>
+                </div>
+                <span>o use su email para registrarse</span>
+                <input type="text" placeholder="Nombre completo" required />
+                <input type="email" placeholder="Email" required />
+                <input type="password" placeholder="Contraseña" required />
+                <button type="submit">Registrarse</button>
+            </form>
+        </div>
+        
+        <div class="form-container sign-in-container">
+            <form action="#">
+                <div class="form-logo">
+                    <img src="{% static 'media/logovidanova1.webp' %}" alt="Vidanova" class="form-logo-img">
+                    <h1>Bienvenido</h1>
+                </div>
+                <div class="social-container">
+                    <a href="#" class="social"><i class="bx bxl-facebook"></i></a>
+                    <a href="#" class="social"><i class="bx bxl-google"></i></a>
+                    <a href="#" class="social"><i class="bx bxl-linkedin"></i></a>
+                </div>
+                <span>o use su cuenta</span>
+                <input type="email" placeholder="Email" required />
+                <input type="password" placeholder="Contraseña" required />
+                <a href="#" class="forgot-password">¿Olvidó su contraseña?</a>
+                <button type="submit">Iniciar Sesión</button>
+            </form>
+        </div>
+
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <div class="overlay-content">
+                        <img src="{% static 'media/logovidanova1.webp' %}" alt="Vidanova" class="overlay-logo">
+                        <h1>¡Bienvenido de nuevo!</h1>
+                        <p>Mantenga su conexión con nosotros iniciando sesión con su información personal</p>
+                        <button class="ghost" id="signIn">Iniciar Sesión</button>
+                    </div>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <div class="overlay-content">
+                        <h1>¡Hola, bienvenido!</h1>
+                        <p>Ingrese sus datos personales y comience su journey con nosotros</p>
+                        <button class="ghost" id="signUp">Registrarse</button>
+                    </div>
+                </div>
             </div>
-            <span>o use su email para registrarse</span>
-            <input type="text" placeholder="Nombre" />
-            <input type="email" placeholder="Email" />
-            <input type="password" placeholder="Contraseña" />
-            <button>Registrarse</button>
-        </form>
-    </div>
-    <div class="form-container sign-in-container">
-    <form action="#">
-        <h1>Ingreso</h1>
-        <div class="social-container">
-            <a href="#" class="social"><i class="feb fa-facebook-f"></i></a>
-            <a href="#" class="social"><i class="feb fa-google-plus-g"></i></a>
-            <a href="#" class="social"><i class="feb fa-linkedin-in"></i></a>
-        </div>
-        <span>o use su cuenta</span>
-        <input type="email" placeholder="Email" />
-        <input type="password" placeholder="Contraseña" />
-        <a href="#">¿Olvidó su contraseña?</a>
-        <button>Ingreso</button>
-    </form>
-</div>
-<div class="overlay-container">
-    <div class="overlay">
-        <div class="overlay-panel overlay-left">
-            <h1>Bienvenido de nuevo</h1>
-            <p>Use sus credenciales para acceder</p>
-            <button class="ghost" id="signIn">Ingreso</button>
-        </div>
-        <div class="overlay-panel overlay-right">
-            <h1>Hola, amigo</h1>
-            <p>Ingrese algunos datos suyos por favor</p>
-            <button class="ghost" id="signUp">Registrarse</button>
         </div>
     </div>
-</div>
-</div>
-<footer>
-    <p>
-        Create with <i class="feb fa-heart"></i> by Juan Jose
-        <a target="_blank" href="http://">Florin pop</a>
-        - read how I created this and how you can join the challenge
-        <a target="_blank" href="https://www.florin-pop.com/blog/2020/05/30/50-projects-50-days-day-1/">here</a>
-    </p>
-</footer>
+
+    <footer>
+        <p>
+            Creado con <i class="bx bxs-heart" style="color: #ff4757;"></i> para IPS Vidanova
+            <a target="_blank" href="#">Sistema de Gestión Médica</a>
+            - © 2024 Todos los derechos reservados
+        </p>
+    </footer>
+
+    <script>
+        const signUpButton = document.getElementById('signUp');
+        const signInButton = document.getElementById('signIn');
+        const container = document.getElementById('container');
+
+        signUpButton.addEventListener('click', () => {
+            container.classList.add("right-panel-active");
+        });
+
+        signInButton.addEventListener('click', () => {
+            container.classList.remove("right-panel-active");
+        });
+    </script>
 </body>
 </html>
