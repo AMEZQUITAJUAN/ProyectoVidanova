@@ -1,0 +1,355 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}Pagina inicial{% endblock %}
+
+{% block content %}
+
+
+<div class="app">
+
+  <!-- ====== App Bar ====== -->
+  <header class="appbar" role="banner">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">MD</div>
+      <div>
+        <div class="h1">Directorio Médico</div>
+        <div class="subtle">Consulta especialistas y agenda disponible</div>
+      </div>
+    </div>
+    <nav class="nav" aria-label="Navegación principal">
+      <a href="#doctores" aria-current="page">Doctores</a>
+      <a href="#agenda">Agenda</a>
+      <a href="#acerca">Acerca</a>
+    </nav>
+  </header>
+
+  <!-- ====== Doctores (default) ====== -->
+  <section id="doctores" class="view" role="region" aria-labelledby="tit-doctores">
+    <h2 id="tit-doctores" class="h2" style="margin:8px 2px 12px">Médicos disponibles</h2>
+
+    <div class="grid">
+      <!-- === Card 1 === -->
+      <article class="card col-6" itemscope itemtype="https://schema.org/Physician">
+        <div class="doc">
+          <div class="avatar" aria-hidden="true">
+            <!-- avatar placeholder -->
+            <svg width="42" height="42" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="8" r="4" fill="#c7cdd9"/>
+              <rect x="3" y="15" width="18" height="7" rx="3.5" fill="#c7cdd9"/>
+            </svg>
+          </div>
+          <div>
+            <div class="doc-head">
+              <div>
+                <div class="h3" itemprop="name">Dra. Laura Mendoza</div>
+                <div class="meta">
+                  <span class="badge" itemprop="medicalSpecialty">Oncología Clínica</span>
+                  <span class="chip ok">Citas hoy</span>
+                  <span class="chip">Bogotá D.C.</span>
+                </div>
+              </div>
+              <a class="btn ghost" href="#perfil-laura">Ver perfil</a>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="row">
+              <div class="kv">
+                <b>Disponibilidad</b>
+                <span class="subtle">L–V 8:00–12:30 / 14:00–18:00</span>
+                <div class="slots">
+                  <span class="chip">Hoy 15:30</span>
+                  <span class="chip">Mañana 09:00</span>
+                  <span class="chip">Mañana 16:30</span>
+                </div>
+              </div>
+              <div class="kv">
+                <b>Contacto</b>
+                <span class="subtle" itemprop="telephone">+57 320 555 0091</span>
+                <span class="subtle">laura.mendoza@salud.co</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- === Card 2 === -->
+      <article class="card col-6" itemscope itemtype="https://schema.org/Physician">
+        <div class="doc">
+          <div class="avatar" aria-hidden="true">
+            <svg width="42" height="42" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="8" r="4" fill="#c7cdd9"/>
+              <rect x="3" y="15" width="18" height="7" rx="3.5" fill="#c7cdd9"/>
+            </svg>
+          </div>
+          <div>
+            <div class="doc-head">
+              <div>
+                <div class="h3" itemprop="name">Dr. Miguel Rojas</div>
+                <div class="meta">
+                  <span class="badge" itemprop="medicalSpecialty">Cardiología</span>
+                  <span class="chip warn">Pocas horas</span>
+                  <span class="chip">Medellín</span>
+                </div>
+              </div>
+              <a class="btn ghost" href="#perfil-miguel">Ver perfil</a>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="row">
+              <div class="kv">
+                <b>Disponibilidad</b>
+                <span class="subtle">L–J 8:00–13:00 • V 8:00–12:00</span>
+                <div class="slots">
+                  <span class="chip">Jue 10:20</span>
+                  <span class="chip">Vie 11:40</span>
+                </div>
+              </div>
+              <div class="kv">
+                <b>Contacto</b>
+                <span class="subtle" itemprop="telephone">+57 312 777 2211</span>
+                <span class="subtle">miguel.rojas@cardio.co</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- === Card 3 === -->
+      <article class="card col-6" itemscope itemtype="https://schema.org/Physician">
+        <div class="doc">
+          <div class="avatar" aria-hidden="true">
+            <svg width="42" height="42" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="8" r="4" fill="#c7cdd9"/>
+              <rect x="3" y="15" width="18" height="7" rx="3.5" fill="#c7cdd9"/>
+            </svg>
+          </div>
+          <div>
+            <div class="doc-head">
+              <div>
+                <div class="h3" itemprop="name">Dra. Sofía Pineda</div>
+                <div class="meta">
+                  <span class="badge" itemprop="medicalSpecialty">Pediatría</span>
+                  <span class="chip ok">Alta disponibilidad</span>
+                  <span class="chip">Cali</span>
+                </div>
+              </div>
+              <a class="btn ghost" href="#perfil-sofia">Ver perfil</a>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="row">
+              <div class="kv">
+                <b>Disponibilidad</b>
+                <span class="subtle">L–S 7:30–12:00</span>
+                <div class="slots">
+                  <span class="chip">Hoy 11:15</span>
+                  <span class="chip">Sáb 09:30</span>
+                  <span class="chip">Lun 10:00</span>
+                </div>
+              </div>
+              <div class="kv">
+                <b>Contacto</b>
+                <span class="subtle" itemprop="telephone">+57 305 888 4432</span>
+                <span class="subtle">sofia.pineda@peds.co</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ====== Perfil: Laura ====== -->
+  <section id="perfil-laura" class="view" role="region" aria-labelledby="tit-laura">
+    <div class="profile">
+      <aside class="card">
+        <div class="avatar" style="width:140px;height:140px;border-radius:22px;margin-bottom:12px">
+          <!-- foto -->
+          <svg width="70" height="70" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="8" r="4" fill="#c7cdd9"/>
+            <rect x="3" y="15" width="18" height="7" rx="3.5" fill="#c7cdd9"/>
+          </svg>
+        </div>
+        <div class="h2" id="tit-laura">Dra. Laura Mendoza</div>
+        <div class="row" style="margin-top:6px">
+          <span class="badge">Oncología Clínica</span>
+          <span class="chip">10 años exp.</span>
+        </div>
+        <div class="divider"></div>
+        <p class="subtle">Registro Médico: 124578 • Idiomas: Español / Inglés</p>
+        <p class="subtle">Clínica Andina, Torre B, Consultorio 503</p>
+        <div class="row" style="margin-top:8px">
+          <a class="btn" href="#agenda">Agendar cita</a>
+          <a class="btn alt" href="#doctores">Volver</a>
+        </div>
+      </aside>
+
+      <section>
+        <div class="card" style="margin-bottom:16px">
+          <div class="h3">Sobre la especialista</div>
+          <p>Tratamiento integral del paciente oncológico adulto. Enfoque en quimioterapia, medicina de precisión y soporte paliativo. Trabajo coordinado con radioterapia y cirugía.</p>
+          <div class="legend" style="margin-top:8px">
+            <span><i class="status-dot s-ok"></i> Citas disponibles</span>
+            <span><i class="status-dot s-warn"></i> Últimos cupos</span>
+            <span><i class="status-dot s-busy"></i> Sin cupo</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="h3">Agenda de esta semana</div>
+          <table aria-label="Agenda semanal">
+            <thead>
+              <tr><th>Día</th><th>Turno</th><th>Bloques</th><th>Estado</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Lunes</td><td>Mañana</td><td>08:30, 09:40, 11:20</td><td><span class="status-dot s-ok"></span> Disponible</td></tr>
+              <tr><td>Martes</td><td>Tarde</td><td>14:10, 15:30, 16:50</td><td><span class="status-dot s-warn"></span> Pocos cupos</td></tr>
+              <tr><td>Miércoles</td><td>Mañana</td><td>09:10, 10:30</td><td><span class="status-dot s-busy"></span> Completo</td></tr>
+              <tr><td>Jueves</td><td>Tarde</td><td>14:00, 15:20</td><td><span class="status-dot s-ok"></span> Disponible</td></tr>
+              <tr><td>Viernes</td><td>Mañana</td><td>08:40, 10:10, 11:30</td><td><span class="status-dot s-ok"></span> Disponible</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <!-- ====== Perfil: Miguel ====== -->
+  <section id="perfil-miguel" class="view" role="region" aria-labelledby="tit-miguel">
+    <div class="profile">
+      <aside class="card">
+        <div class="avatar" style="width:140px;height:140px;border-radius:22px;margin-bottom:12px"></div>
+        <div class="h2" id="tit-miguel">Dr. Miguel Rojas</div>
+        <div class="row" style="margin-top:6px">
+          <span class="badge">Cardiología</span>
+          <span class="chip">15 años exp.</span>
+        </div>
+        <div class="divider"></div>
+        <p class="subtle">Registro Médico: 889012 • Idiomas: Español</p>
+        <p class="subtle">Instituto del Corazón — Piso 4</p>
+        <div class="row" style="margin-top:8px">
+          <a class="btn" href="#agenda">Agendar cita</a>
+          <a class="btn alt" href="#doctores">Volver</a>
+        </div>
+      </aside>
+
+      <section>
+        <div class="card" style="margin-bottom:16px">
+          <div class="h3">Sobre el especialista</div>
+          <p>Diagnóstico y manejo de hipertensión, arritmias y cardiopatía isquémica. Interpretación avanzada de ecocardiografía.</p>
+        </div>
+
+        <div class="card">
+          <div class="h3">Agenda de esta semana</div>
+          <table aria-label="Agenda semanal Miguel">
+            <thead>
+              <tr><th>Día</th><th>Turno</th><th>Bloques</th><th>Estado</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Lunes</td><td>Mañana</td><td>08:10, 09:30</td><td><span class="status-dot s-warn"></span> Pocos cupos</td></tr>
+              <tr><td>Martes</td><td>Mañana</td><td>08:30, 10:00</td><td><span class="status-dot s-ok"></span> Disponible</td></tr>
+              <tr><td>Jueves</td><td>Mañana</td><td>08:20, 09:40, 11:00</td><td><span class="status-dot s-ok"></span> Disponible</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <!-- ====== Perfil: Sofía ====== -->
+  <section id="perfil-sofia" class="view" role="region" aria-labelledby="tit-sofia">
+    <div class="profile">
+      <aside class="card">
+        <div class="avatar" style="width:140px;height:140px;border-radius:22px;margin-bottom:12px"></div>
+        <div class="h2" id="tit-sofia">Dra. Sofía Pineda</div>
+        <div class="row" style="margin-top:6px">
+          <span class="badge">Pediatría</span>
+          <span class="chip">7 años exp.</span>
+        </div>
+        <div class="divider"></div>
+        <p class="subtle">Registro Médico: 337712 • Idiomas: Español / Inglés</p>
+        <p class="subtle">Hospital Infantil — Torre A</p>
+        <div class="row" style="margin-top:8px">
+          <a class="btn" href="#agenda">Agendar cita</a>
+          <a class="btn alt" href="#doctores">Volver</a>
+        </div>
+      </aside>
+
+      <section>
+        <div class="card">
+          <div class="h3">Agenda de esta semana</div>
+          <table aria-label="Agenda semanal Sofía">
+            <thead>
+              <tr><th>Día</th><th>Turno</th><th>Bloques</th><th>Estado</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Martes</td><td>Mañana</td><td>08:00, 09:20, 10:40</td><td><span class="status-dot s-ok"></span> Disponible</td></tr>
+              <tr><td>Miércoles</td><td>Mañana</td><td>08:10, 09:30</td><td><span class="status-dot s-ok"></span> Disponible</td></tr>
+              <tr><td>Sábado</td><td>Mañana</td><td>08:30, 09:50, 11:10</td><td><span class="status-dot s-warn"></span> Últimos cupos</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <!-- ====== Agenda "global" ====== -->
+  <section id="agenda" class="view" role="region" aria-labelledby="tit-agenda">
+    <div class="card">
+      <div class="h2" id="tit-agenda">Agenda — Próximos cupos</div>
+      <p class="subtle">Selecciona un médico desde su perfil o vuelve a <a href="#doctores">Doctores</a>.</p>
+      <div class="grid" style="margin-top:10px">
+        <div class="card col-4">
+          <div class="h3">Dra. Laura Mendoza</div>
+          <div class="slots" style="margin-top:8px">
+            <span class="chip">Hoy 15:30</span>
+            <span class="chip">Mañana 09:00</span>
+            <span class="chip">Jue 14:10</span>
+          </div>
+        </div>
+        <div class="card col-4">
+          <div class="h3">Dr. Miguel Rojas</div>
+          <div class="slots" style="margin-top:8px">
+            <span class="chip">Jue 10:20</span>
+            <span class="chip">Vie 11:40</span>
+          </div>
+        </div>
+        <div class="card col-4">
+          <div class="h3">Dra. Sofía Pineda</div>
+          <div class="slots" style="margin-top:8px">
+            <span class="chip">Hoy 11:15</span>
+            <span class="chip">Sáb 09:30</span>
+            <span class="chip">Lun 10:00</span>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <a class="btn alt" href="#doctores">Volver a doctores</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== Acerca ====== -->
+  <section id="acerca" class="view" role="region" aria-labelledby="tit-acerca">
+    <article class="card">
+      <div class="h2" id="tit-acerca">Acerca de esta SPA</div>
+      <p>Interfaz de consulta de médicos construida únicamente con <b>HTML5 + CSS3</b>. La navegación es de una sola página usando anclas y el selector <code>:target</code>. Puedes reemplazar los avatares por fotos reales (etiqueta <code>&lt;img&gt;</code>) y ajustar horarios/ciudades según tu base de datos.</p>
+      <ul>
+        <li>Secciones: <i>Doctores</i>, <i>Perfil</i> y <i>Agenda</i>.</li>
+        <li>Badges para especialidad y estado de disponibilidad.</li>
+        <li>Tablas de agenda semanales y chips de cupos rápidos.</li>
+        <li>Semántica accesible (roles, headings y microdatos <code>schema.org/Physician</code>).</li>
+      </ul>
+      <a class="btn alt" href="#doctores">Volver a doctores</a>
+    </article>
+  </section>
+
+  <footer class="appfoot">
+    © 2025 Directorio Médico — UI solo con HTML y CSS
+  </footer>
+</div>
+{% endblock %}

@@ -10,4 +10,6 @@ urlpatterns = [
     path('board/', include('indicadores.urls')),
     path('search/', include('search.urls')),
     path('grid/', include('grid_search.urls')),
+    path('doctors/', include('doctors.urls')),
+    path('mensajes/', include('mensajes.urls')),
 ]

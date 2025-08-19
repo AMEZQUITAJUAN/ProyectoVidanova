@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'indicadores',
     'search',
     'grid_search',
+    'doctors',
+    'mensajes',
 ]
 
 MIDDLEWARE = [

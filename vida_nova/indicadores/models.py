@@ -16,20 +16,20 @@ class Patient(models.Model):
         return f"{self.first_name} {self.last_name} - {self.identification}"  # si los dias son menos de rojo si faltan <3 días, amarillo si <7, verde si >7)
                             
     
-class Patient(models.Model):
-    name = models.CharField(max_length=100)
-    id_type = models.CharField(max_length=50)  # Tipo de Identificación
-    phone_numbers = models.CharField(max_length=100)
-    emails = models.CharField(max_length=150)
-    gender = models.CharField(max_length=20)
-    occupation = models.CharField(max_length=100)
-    education_level = models.CharField(max_length=100)
-    socioeconomic_status = models.CharField(max_length=20)  # Estrato
-    country = models.CharField(max_length=100)
-    state = models.CharField(max_length=100)  # Departamento
-    city_of_residence = models.CharField(max_length=100)
-    age = models.IntegerField()
-    vital_status = models.CharField(max_length=10)
+# class Patient(models.Model):
+#     name = models.CharField(max_length=100)
+#     id_type = models.CharField(max_length=50)  # Tipo de Identificación
+#     phone_numbers = models.CharField(max_length=100)
+#     emails = models.CharField(max_length=150)
+#     gender = models.CharField(max_length=20)
+#     occupation = models.CharField(max_length=100)
+#     education_level = models.CharField(max_length=100)
+#     socioeconomic_status = models.CharField(max_length=20)  # Estrato
+#     country = models.CharField(max_length=100)
+#     state = models.CharField(max_length=100)  # Departamento
+#     city_of_residence = models.CharField(max_length=100)
+#     age = models.IntegerField()
+#     vital_status = models.CharField(max_length=10)
 
 class MedicalRequest(models.Model):
     case_type = models.CharField(
