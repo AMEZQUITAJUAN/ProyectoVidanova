@@ -9,91 +9,275 @@
     <title>Login - Vidanova</title>
 </head>
 <body>
-    <!-- Header con Logo -->
-    <div class="header-logo">
-        <img src="{% static 'media/logovidanova1.webp' %}" alt="Vidanova Logo" class="logo-img">
-        <h2>IPS Vidanova</h2>
-    </div>
-
-    <div class="container" id='container'>
-        <div class="form-container sign-up-container">
-            <form action="#">
-                <div class="form-logo">
-                    <img src="{% static 'media/logovidanova1.webp' %}" alt="Vidanova" class="form-logo-img">
-                    <h1>Crea una cuenta</h1>
+    <div class="login-container">
+        <!-- Panel izquierdo con información -->
+        <div class="info-panel">
+            <div class="logo-section">
+                <div class="logo">
+                    <i class="fas fa-heartbeat"></i>
+                    <h1>Vidanova</h1>
                 </div>
-                <div class="social-container">
-                    <a href="#" class="social"><i class="bx bxl-facebook"></i></a>
-                    <a href="#" class="social"><i class="bx bxl-google"></i></a>
-                    <a href="#" class="social"><i class="bx bxl-linkedin"></i></a>
-                </div>
-                <span>o use su email para registrarse</span>
-                <input type="text" placeholder="Nombre completo" required />
-                <input type="email" placeholder="Email" required />
-                <input type="password" placeholder="Contraseña" required />
-                <button type="submit">Registrarse</button>
-            </form>
-        </div>
-        
-        <div class="form-container sign-in-container">
-            <form action="#">
-                <div class="form-logo">
-                    <img src="{% static 'media/logovidanova1.webp' %}" alt="Vidanova" class="form-logo-img">
-                    <h1>Bienvenido</h1>
-                </div>
-                <div class="social-container">
-                    <a href="#" class="social"><i class="bx bxl-facebook"></i></a>
-                    <a href="#" class="social"><i class="bx bxl-google"></i></a>
-                    <a href="#" class="social"><i class="bx bxl-linkedin"></i></a>
-                </div>
-                <span>o use su cuenta</span>
-                <input type="email" placeholder="Email" required />
-                <input type="password" placeholder="Contraseña" required />
-                <a href="#" class="forgot-password">¿Olvidó su contraseña?</a>
-                <button type="submit">Iniciar Sesión</button>
-            </form>
-        </div>
-
-        <div class="overlay-container">
-            <div class="overlay">
-                <div class="overlay-panel overlay-left">
-                    <div class="overlay-content">
-                        <img src="{% static 'media/logovidanova1.webp' %}" alt="Vidanova" class="overlay-logo">
-                        <h1>¡Bienvenido de nuevo!</h1>
-                        <p>Mantenga su conexión con nosotros iniciando sesión con su información personal</p>
-                        <button class="ghost" id="signIn">Iniciar Sesión</button>
+                <p class="tagline">Sistema Integral de Gestión Oncológica</p>
+            </div>
+            
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-user-md"></i>
+                    <div>
+                        <h3>Gestión de Pacientes</h3>
+                        <p>Seguimiento integral y personalizado</p>
                     </div>
                 </div>
-                <div class="overlay-panel overlay-right">
-                    <div class="overlay-content">
-                        <h1>¡Hola, bienvenido!</h1>
-                        <p>Ingrese sus datos personales y comience su Travesia con nosotros</p>
-                        <button class="ghost" id="signUp">Registrarse</button>
+                <div class="feature">
+                    <i class="fas fa-chart-line"></i>
+                    <div>
+                        <h3>Análisis Clínico</h3>
+                        <p>Reportes y métricas avanzadas</p>
                     </div>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <div>
+                        <h3>Seguridad Certificada</h3>
+                        <p>Cumplimiento normativo garantizado</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="medical-graphic">
+                <div class="pulse-animation"></div>
+            </div>
+        </div>
+
+        <!-- Panel derecho con formulario de login -->
+        <div class="login-panel">
+            <div class="login-form-container">
+                <div class="form-header">
+                    <h2>Iniciar Sesión</h2>
+                    <p>Accede a tu cuenta profesional</p>
+                </div>
+
+                <form id="loginForm" class="login-form">
+                    <div class="form-group">
+                        <label for="username">
+                            <i class="fas fa-user"></i>
+                            Usuario
+                        </label>
+                        <input 
+                            type="text" 
+                            id="username" 
+                            name="username" 
+                            required 
+                            placeholder="Ingresa tu usuario"
+                            autocomplete="username"
+                        >
+                        <div class="input-border"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">
+                            <i class="fas fa-lock"></i>
+                            Contraseña
+                        </label>
+                        <div class="password-container">
+                            <input 
+                                type="password" 
+                                id="password" 
+                                name="password" 
+                                required 
+                                placeholder="Ingresa tu contraseña"
+                                autocomplete="current-password"
+                            >
+                            <button type="button" class="toggle-password" aria-label="Mostrar contraseña">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="input-border"></div>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox" name="remember">
+                            <span class="checkmark"></span>
+                            Recordar sesión
+                        </label>
+                        
+                        <a href="#" class="forgot-password">
+                            ¿Olvidaste tu contraseña?
+                        </a>
+                    </div>
+
+                    <button type="submit" class="login-button">
+                        <span class="button-text">Iniciar Sesión</span>
+                        <div class="button-loader">
+                            <div class="spinner"></div>
+                        </div>
+                    </button>
+
+                    <div class="error-message" id="errorMessage">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span></span>
+                    </div>
+                </form>
+
+                <div class="help-section">
+                    <p>¿Necesitas ayuda?</p>
+                    <div class="help-options">
+                        <a href="#" class="help-link">
+                            <i class="fas fa-phone"></i>
+                            Soporte Técnico
+                        </a>
+                        <a href="#" class="help-link">
+                            <i class="fas fa-book"></i>
+                            Manual de Usuario
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="login-footer">
+                <p>&copy; 2024 Vidanova IPS. Sistema certificado para gestión oncológica.</p>
+                <div class="compliance-badges">
+                    <span class="badge">ISO 27001</span>
+                    <span class="badge">HIPAA</span>
+                    <span class="badge">SOC 2</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <footer>
-        <p>
-            Creado con <i class="bx bxs-heart" style="color: #ff4757;"></i> para IPS Vidanova
-            <a target="_blank" href="#">Sistema de Gestión Médica</a>
-            - © 2025 Todos los derechos reservados
-        </p>
-    </footer>
-
+    <!-- Overlay de carga -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="medical-cross">
+                <div class="cross-animation"></div>
+            </div>
+            <p>Validando credenciales...</p>
+        </div>
+    </div>
+    
     <script>
-        const signUpButton = document.getElementById('signUp');
-        const signInButton = document.getElementById('signIn');
-        const container = document.getElementById('container');
+        // JavaScript para funcionalidad del login
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const togglePassword = document.querySelector('.toggle-password');
+            const passwordInput = document.getElementById('password');
+            const loginButton = document.querySelector('.login-button');
+            const errorMessage = document.getElementById('errorMessage');
+            const loadingOverlay = document.getElementById('loadingOverlay');
 
-        signUpButton.addEventListener('click', () => {
-            container.classList.add("right-panel-active");
-        });
+            // Toggle password visibility
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-eye');
+                icon.classList.toggle('fa-eye-slash');
+            });
 
-        signInButton.addEventListener('click', () => {
-            container.classList.remove("right-panel-active");
+            // Form submission
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                
+                // Validación básica
+                if (!username || !password) {
+                    showError('Por favor, completa todos los campos');
+                    return;
+                }
+                
+                // Mostrar loading
+                showLoading();
+                
+                // Simular autenticación (aquí integrarías con tu backend)
+                setTimeout(() => {
+                    // Ejemplo de validación - reemplazar con lógica real
+                    if (validateCredentials(username, password)) {
+                        // Redirect based on user role
+                        redirectToUserDashboard(username);
+                    } else {
+                        hideLoading();
+                        showError('Credenciales incorrectas. Verifica tu usuario y contraseña.');
+                    }
+                }, 2000);
+            });
+
+            function showLoading() {
+                loginButton.classList.add('loading');
+                loadingOverlay.classList.add('show');
+                errorMessage.classList.remove('show');
+            }
+
+            function hideLoading() {
+                loginButton.classList.remove('loading');
+                loadingOverlay.classList.remove('show');
+            }
+
+            function showError(message) {
+                errorMessage.querySelector('span').textContent = message;
+                errorMessage.classList.add('show');
+                
+                // Auto-hide after 5 seconds
+                setTimeout(() => {
+                    errorMessage.classList.remove('show');
+                }, 5000);
+            }
+
+            function validateCredentials(username, password) {
+                // Aquí implementarías la validación real con tu backend
+                // Por ahora, usuarios de ejemplo:
+                const users = {
+                    'admin': { password: 'admin123', role: 'superadmin' },
+                    'medico1': { password: 'med123', role: 'medico' },
+                    'enfermera1': { password: 'enf123', role: 'enfermeria' },
+                    'secretaria1': { password: 'sec123', role: 'secretaria' }
+                };
+                
+                return users[username] && users[username].password === password;
+            }
+
+            function redirectToUserDashboard(username) {
+                // Aquí definirías las rutas según el rol del usuario
+                const users = {
+                    'admin': { role: 'superadmin', redirect: 'admin-dashboard.html' },
+                    'medico1': { role: 'medico', redirect: 'medico-dashboard.html' },
+                    'enfermera1': { role: 'enfermeria', redirect: 'enfermeria-dashboard.html' },
+                    'secretaria1': { role: 'secretaria', redirect: 'secretaria-dashboard.html' }
+                };
+                
+                const user = users[username];
+                if (user) {
+                    // Store user session (en producción usar tokens seguros)
+                    sessionStorage.setItem('userRole', user.role);
+                    sessionStorage.setItem('username', username);
+                    
+                    // Redirect to appropriate dashboard
+                    window.location.href = user.redirect;
+                }
+            }
+
+            // Auto-focus en el campo de usuario
+            document.getElementById('username').focus();
+
+            // Manejo de Enter en los campos
+            document.getElementById('username').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    document.getElementById('password').focus();
+                }
+            });
+
+            // Limpieza de errores al escribir
+            document.getElementById('username').addEventListener('input', function() {
+                errorMessage.classList.remove('show');
+            });
+
+            document.getElementById('password').addEventListener('input', function() {
+                errorMessage.classList.remove('show');
+            });
         });
     </script>
 </body>
