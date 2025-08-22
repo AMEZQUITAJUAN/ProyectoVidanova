@@ -1,12 +1,152 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <h1>Holaaa</h1>
-</head>
-<body>
-    
-</body>
-</html>
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}Tablero Administrativo{% endblock %}
+
+{% block content %}
+  <link rel="stylesheet" href="{% static 'css/adminboard.css' %}">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <main class="vn-main">
+    <!-- Filtros -->
+    <section class="vn-card">
+      <h2>Filtros</h2>
+      <form method="get" class="filters">
+        <div class="grid-4">
+          <div>
+            <label for="date_from">Desde</label>
+            <input type="date" id="date_from" name="date_from" value="{{ filters.date_from|default:'' }}">
+          </div>
+          <div>
+            <label for="date_to">Hasta</label>
+            <input type="date" id="date_to" name="date_to" value="{{ filters.date_to|default:'' }}">
+          </div>
+          <div>
+            <label for="status">Estado de la Solicitud</label>
+            <select id="status" name="status">
+              <option value="">Todos</option>
+              {% for s in choices.status %}
+                <option value="{{ s }}" {% if filters.status == s %}selected{% endif %}>{{ s }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div>
+            <label for="procedure">Tipo de Procedimiento</label>
+            <select id="procedure" name="procedure">
+              <option value="">Todos</option>
+              {% for p in choices.procedure %}
+                <option value="{{ p }}" {% if filters.procedure == p %}selected{% endif %}>{{ p }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="filters-actions">
+          <button class="btn primary" type="submit">Aplicar</button>
+          <a class="btn ghost" href=".">Limpiar</a>
+        </div>
+      </form>
+    </section>
+
+    <!-- KPI Cards -->
+    <section class="kpi-grid">
+      <div class="vn-card kpi">
+        <h3>Ordenar #</h3>
+        <div class="kpi-value">{{ kpis.total_ordenar }}</div>
+      </div>
+      <div class="vn-card kpi">
+        <h3>Realizados</h3>
+        <div class="kpi-value">{{ kpis.realizados }}</div>
+      </div>
+      <div class="vn-card kpi">
+        <h3>Agendados</h3>
+        <div class="kpi-value">{{ kpis.agendados }}</div>
+      </div>
+      <div class="vn-card kpi">
+        <h3>Pendientes</h3>
+        <div class="kpi-value">{{ kpis.pendientes }}</div>
+      </div>
+      <div class="vn-card kpi">
+        <h3>Promedio de días</h3>
+        <div class="kpi-value">{{ kpis.promedio_dias }}</div>
+      </div>
+    </section>
+
+    <!-- Gráficas -->
+    <section class="grid-2">
+      <div class="vn-card">
+        <h2>Estado de la Solicitud</h2>
+        <canvas id="statusChart"></canvas>
+      </div>
+      <div class="vn-card">
+        <h2>Promedio de Oportunidad por Procedimiento (días)</h2>
+        <canvas id="opChart"></canvas>
+      </div>
+    </section>
+
+    <!-- Tabla detalle -->
+    <section class="vn-card">
+      <h2>Detalle por Solicitud</h2>
+      <div class="table-wrap">
+        <table class="vn-table">
+          <thead>
+            <tr>
+              <th>Paciente</th>
+              <th>Tipo de Procedimiento</th>
+              <th>Estado de la Solicitud</th>
+              <th>Fecha Solicitud</th>
+              <th>Fecha Cita</th>
+              <th>Días (Oportunidad)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in table %}
+              <tr>
+                <td>{{ row.paciente }}</td>
+                <td>{{ row.procedimiento }}</td>
+                <td>{{ row.estado }}</td>
+                <td>{{ row.fecha_solicitud }}</td>
+                <td>{{ row.fecha_cita|default:"—" }}</td>
+                <td class="num">{{ row.dias }}</td>
+              </tr>
+            {% empty %}
+              <tr><td colspan="6" class="empty">No hay datos para mostrar.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Gráfica de Estados (doughnut)
+    new Chart(
+      document.getElementById('statusChart'),
+      {
+        type: 'doughnut',
+        data: {
+          labels: statusLabels,
+          datasets: [{ data: statusData }]
+        },
+        options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+      }
+    );
+
+    // Gráfica de Oportunidad (bar)
+    new Chart(
+      document.getElementById('opChart'),
+      {
+        type: 'bar',
+        data: {
+          labels: opLabels,
+          datasets: [{ label: 'Promedio de días', data: opData }]
+        },
+        options: {
+          responsive: true,
+          scales: { y: { beginAtZero: true } },
+          plugins: { legend: { display: false } }
+        }
+      }
+    );
+  </script>
+{% endblock %}
