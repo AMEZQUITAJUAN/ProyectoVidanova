@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'grid_search',
     'doctors',
     'mensajes',
+    'adminboard',
 ]
 
 MIDDLEWARE = [
