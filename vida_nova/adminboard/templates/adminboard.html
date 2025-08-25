@@ -1,105 +1,402 @@
-{% extends 'layout.html' %}
-{% load static %}
-
-{% block title %}Tablero Administrativo{% endblock %}
-
-{% block content %}
-  <link rel="stylesheet" href="{% static 'css/adminboard.css' %}">
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <main class="vn-main">
-    <!-- Filtros -->
-    <section class="vn-card filters-card">
-      <h2>Filtros</h2>
-      <form method="get" class="filters">
-        <div class="grid-4">
-          <div>
-            <label for="date_from">Desde</label>
-            <input type="date" id="date_from" name="date_from" value="{{ filters.date_from|default:'' }}">
-          </div>
-          <div>
-            <label for="date_to">Hasta</label>
-            <input type="date" id="date_to" name="date_to" value="{{ filters.date_to|default:'' }}">
-          </div>
-          <div>
-            <label for="status">Estado de la Solicitud</label>
-            <select id="status" name="status">
-              <option value="">Todos</option>
-              {% for s in choices.status %}
-                <option value="{{ s }}" {% if filters.status == s %}selected{% endif %}>{{ s }}</option>
-              {% endfor %}
-            </select>
-          </div>
-          <div>
-            <label for="procedure">Tipo de Procedimiento</label>
-            <select id="procedure" name="procedure">
-              <option value="">Todos</option>
-              {% for p in choices.procedure %}
-                <option value="{{ p }}" {% if filters.procedure == p %}selected{% endif %}>{{ p }}</option>
-              {% endfor %}
-            </select>
-          </div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vidanova - Tablero Administrativo</title>
+    {% load static %}
+    <link href="{% static 'css/adminboard.css' %}" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <h1>Vidanova</h1>
+            </div>
+            <p class="subtitle">Tablero de control</p>
         </div>
-        <div class="filters-actions">
-          <button class="btn primary" type="submit">Aplicar</button>
-          <a class="btn ghost" href=".">Limpiar</a>
-        </div>
-      </form>
-    </section>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <h3>Principal</h3>
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>Pacientes</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Citas</span>
+                </a>
+            </div>
+            
+            <div class="nav-section">
+                <h3>Gestión</h3>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-file-medical"></i>
+                    <span>Procedimientos</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-user-md"></i>
+                    <span>Personal Médico</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Configuración</span>
+                </a>
+            </div>
+        </nav>
+    </div>
 
-    <!-- KPI Cards -->
-    <section class="kpi-grid">
-      <div class="vn-card kpi blue"><h3>Ordenar #</h3><div class="kpi-value">{{ kpis.total_ordenar }}</div></div>
-      <div class="vn-card kpi purple"><h3>Realizados</h3><div class="kpi-value">{{ kpis.realizados }}</div></div>
-      <div class="vn-card kpi teal"><h3>Agendados</h3><div class="kpi-value">{{ kpis.agendados }}</div></div>
-      <div class="vn-card kpi pink"><h3>Pendientes</h3><div class="kpi-value">{{ kpis.pendientes }}</div></div>
-      <div class="vn-card kpi gray"><h3>Promedio de días</h3><div class="kpi-value">{{ kpis.promedio_dias }}</div></div>
-    </section>
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <button class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h2>Tablero Administrativo</h2>
+            </div>
+            
+            <div class="header-right">
+                <div class="user-menu">
+                    <div class="user-info">
+                        <span class="user-name">Admin Usuario</span>
+                        <span class="user-role">Super Administrador</span>
+                    </div>
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+            </div>
+        </header>
 
-    <!-- Gráficas -->
-    <section class="grid-2">
-      <div class="vn-card chart-card">
-        <h2>Estado de la Solicitud</h2>
-        <canvas id="statusChart"></canvas>
-      </div>
-      <div class="vn-card chart-card">
-        <h2>Promedio de Oportunidad por Procedimiento (días)</h2>
-        <canvas id="opChart"></canvas>
-      </div>
-    </section>
+        <!-- Filtros -->
+        <section class="vn-card filters-card">
+            <h2 class="card-title">
+                <i class="fas fa-filter"></i>
+                Filtros
+            </h2>
+            <form class="filters">
+                <div class="grid-4">
+                    <div class="form-group">
+                        <label for="date_from">Desde</label>
+                        <input type="date" id="date_from" name="date_from" value="2024-01-01">
+                    </div>
+                    <div class="form-group">
+                        <label for="date_to">Hasta</label>
+                        <input type="date" id="date_to" name="date_to" value="2024-12-31">
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Estado de la Solicitud</label>
+                        <select id="status" name="status">
+                            <option value="">Todos</option>
+                            <option value="pendiente">Pendiente</option>
+                            <option value="en_gestion">En gestión</option>
+                            <option value="por_gestionar">Por gestionar</option>
+                            <option value="agendado">Agendado</option>
+                            <option value="realizado">Realizado</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="procedure">Tipo de Procedimiento</label>
+                        <select id="procedure" name="procedure">
+                            <option value="">Todos</option>
+                            <option value="oncologia">Oncología</option>
+                            <option value="cirugia">Cirugía</option>
+                            <option value="radioterapia">Radioterapia</option>
+                            <option value="quimioterapia">Quimioterapia</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="filters-actions">
+                    <button class="btn primary" type="submit">
+                        <i class="fas fa-search"></i>
+                        Aplicar
+                    </button>
+                    <button class="btn ghost" type="button">
+                        <i class="fas fa-times"></i>
+                        Limpiar
+                    </button>
+                </div>
+            </form>
+        </section>
 
-    <!-- Tabla detalle -->
-    <section class="vn-card table-card">
-      <h2>Detalle por Solicitud</h2>
-      <div class="table-wrap">
-        <table class="vn-table">
-          <thead>
-            <tr>
-              <th>Paciente</th>
-              <th>Tipo de Procedimiento</th>
-              <th>Estado de la Solicitud</th>
-              <th>Fecha Solicitud</th>
-              <th>Fecha Cita</th>
-              <th>Días (Oportunidad)</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for row in table %}
-              <tr>
-                <td>{{ row.paciente }}</td>
-                <td>{{ row.procedimiento }}</td>
-                <td>{{ row.estado }}</td>
-                <td>{{ row.fecha_solicitud }}</td>
-                <td>{{ row.fecha_cita|default:"—" }}</td>
-                <td class="num">{{ row.dias }}</td>
-              </tr>
-            {% empty %}
-              <tr><td colspan="6" class="empty">No hay datos para mostrar.</td></tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    </section>
-  </main>
-{% endblock %}
+        <!-- KPI Cards -->
+        <section class="kpi-grid">
+            <div class="vn-card kpi blue">
+                <div class="kpi-header">
+                    <h3>Total Ordenar</h3>
+                    <i class="fas fa-clipboard-list"></i>
+                </div>
+                <div class="kpi-value">156</div>
+                <div class="kpi-trend up">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>+12%</span>
+                </div>
+            </div>
+            
+            <div class="vn-card kpi purple">
+                <div class="kpi-header">
+                    <h3>Realizados</h3>
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="kpi-value">89</div>
+                <div class="kpi-trend up">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>+8%</span>
+                </div>
+            </div>
+            
+            <div class="vn-card kpi teal">
+                <div class="kpi-header">
+                    <h3>Agendados</h3>
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="kpi-value">42</div>
+                <div class="kpi-trend neutral">
+                    <i class="fas fa-minus"></i>
+                    <span>0%</span>
+                </div>
+            </div>
+            
+            <div class="vn-card kpi pink">
+                <div class="kpi-header">
+                    <h3>Pendientes</h3>
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="kpi-value">25</div>
+                <div class="kpi-trend down">
+                    <i class="fas fa-arrow-down"></i>
+                    <span>-5%</span>
+                </div>
+            </div>
+            
+            <div class="vn-card kpi gray">
+                <div class="kpi-header">
+                    <h3>Promedio Días</h3>
+                    <i class="fas fa-stopwatch"></i>
+                </div>
+                <div class="kpi-value">7.2</div>
+                <div class="kpi-trend up">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>+1.2</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gráficas -->
+        <section class="grid-2">
+            <div class="vn-card chart-card">
+                <h2 class="card-title">
+                    <i class="fas fa-pie-chart"></i>
+                    Estado de la Solicitud
+                </h2>
+                <div class="chart-container">
+                    <canvas id="statusChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="vn-card chart-card">
+                <h2 class="card-title">
+                    <i class="fas fa-bar-chart"></i>
+                    Oportunidad por Procedimiento
+                </h2>
+                <div class="chart-container">
+                    <canvas id="opChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Workflow Visual -->
+        <section class="vn-card workflow-card">
+            <h2 class="card-title">
+                <i class="fas fa-sitemap"></i>
+                Flujo de Gestión
+            </h2>
+            <div class="workflow">
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <div class="step-label">Total Ordenar</div>
+                </div>
+                
+                <div class="workflow-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <div class="step-label">Pendiente</div>
+                    <div class="step-percentage">2%</div>
+                </div>
+                
+                <div class="workflow-arrow">
+                    <i class="fas fa-arrow-down"></i>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <div class="step-label">En gestión</div>
+                </div>
+                
+                <div class="workflow-arrow">
+                    <i class="fas fa-arrow-down"></i>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <div class="step-label">Por gestionar</div>
+                </div>
+                
+                <div class="workflow-side">
+                    <div class="workflow-step">
+                        <div class="step-number">2</div>
+                        <div class="step-label">Agendas</div>
+                        <div class="step-percentage">2%</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tabla detalle -->
+        <section class="vn-card table-card">
+            <h2 class="card-title">
+                <i class="fas fa-table"></i>
+                Detalle por Solicitud
+            </h2>
+            <div class="table-wrap">
+                <table class="vn-table">
+                    <thead>
+                        <tr>
+                            <th>
+                                <i class="fas fa-user"></i>
+                                Paciente
+                            </th>
+                            <th>
+                                <i class="fas fa-stethoscope"></i>
+                                Tipo de Procedimiento
+                            </th>
+                            <th>
+                                <i class="fas fa-info-circle"></i>
+                                Estado
+                            </th>
+                            <th>
+                                <i class="fas fa-calendar"></i>
+                                Fecha Solicitud
+                            </th>
+                            <th>
+                                <i class="fas fa-calendar-check"></i>
+                                Fecha Cita
+                            </th>
+                            <th>
+                                <i class="fas fa-clock"></i>
+                                Días
+                            </th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="patient-info">
+                                    <div class="patient-avatar">MP</div>
+                                    <div>
+                                        <strong>María Pérez</strong>
+                                        <small>ID: 12345</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="procedure-badge oncologia">Oncología</span>
+                            </td>
+                            <td>
+                                <span class="status-badge pendiente">Pendiente</span>
+                            </td>
+                            <td>15/01/2024</td>
+                            <td>22/01/2024</td>
+                            <td class="num">7</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-icon primary" title="Ver detalles">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn-icon secondary" title="Editar">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="patient-info">
+                                    <div class="patient-avatar">JG</div>
+                                    <div>
+                                        <strong>Juan García</strong>
+                                        <small>ID: 12346</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="procedure-badge cirugia">Cirugía</span>
+                            </td>
+                            <td>
+                                <span class="status-badge realizado">Realizado</span>
+                            </td>
+                            <td>10/01/2024</td>
+                            <td>18/01/2024</td>
+                            <td class="num">8</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-icon primary" title="Ver detalles">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn-icon secondary" title="Editar">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="patient-info">
+                                    <div class="patient-avatar">AL</div>
+                                    <div>
+                                        <strong>Ana López</strong>
+                                        <small>ID: 12347</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="procedure-badge radioterapia">Radioterapia</span>
+                            </td>
+                            <td>
+                                <span class="status-badge agendado">Agendado</span>
+                            </td>
+                            <td>20/01/2024</td>
+                            <td>25/01/2024</td>
+                            <td class="num">5</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-icon primary" title="Ver detalles">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn-icon secondary" title="Editar">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
