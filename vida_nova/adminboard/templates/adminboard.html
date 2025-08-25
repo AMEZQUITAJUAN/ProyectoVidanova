@@ -397,6 +397,292 @@
                 </table>
             </div>
         </section>
-    </div>
+    </div><script>
+        // Inicialización del Dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCharts();
+            initializeSidebar();
+            initializeFilters();
+        });
+
+        // Toggle Sidebar para móviles
+        function initializeSidebar() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const sidebar = document.querySelector('.sidebar');
+            
+            menuToggle?.addEventListener('click', function() {
+                sidebar.classList.toggle('open');
+            });
+            
+            // Cerrar sidebar al hacer click fuera en móvil
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth <= 968 && !sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+                    sidebar.classList.remove('open');
+                }
+            });
+        }
+
+        // Inicializar filtros
+        function initializeFilters() {
+            const form = document.querySelector('.filters');
+            const clearButton = form?.querySelector('.btn.ghost');
+            
+            clearButton?.addEventListener('click', function(e) {
+                e.preventDefault();
+                form.reset();
+                // Aquí podrías disparar una actualización de datos
+                console.log('Filtros limpiados');
+            });
+        }
+
+        // Inicializar gráficas
+        function initializeCharts() {
+            // Configuración común para los colores Vidanova
+            const vidanovaColors = {
+                primary: '#183ad6',
+                secondary: '#3D54A1',
+                tertiary: '#2f5f98',
+                dark: '#0F2D47',
+                purple: '#8f4392',
+                pink: '#cc9cc8',
+                gray: '#706f6f',
+                grayLight: '#888888'
+            };
+
+            // Gráfica de Estado de Solicitudes (Pie Chart)
+            const statusCtx = document.getElementById('statusChart')?.getContext('2d');
+            if (statusCtx) {
+                new Chart(statusCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Realizados', 'Agendados', 'Pendientes', 'En Gestión', 'Por Gestionar'],
+                        datasets: [{
+                            data: [89, 42, 25, 15, 10],
+                            backgroundColor: [
+                                vidanovaColors.primary,
+                                vidanovaColors.tertiary,
+                                '#f59e0b',
+                                vidanovaColors.purple,
+                                '#ef4444'
+                            ],
+                            borderWidth: 3,
+                            borderColor: '#ffffff',
+                            hoverBorderWidth: 5
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    padding: 20,
+                                    usePointStyle: true,
+                                    font: {
+                                        size: 12,
+                                        weight: '600'
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                backgroundColor: vidanovaColors.dark,
+                                titleColor: '#ffffff',
+                                bodyColor: '#ffffff',
+                                borderColor: vidanovaColors.primary,
+                                borderWidth: 2,
+                                cornerRadius: 8,
+                                displayColors: true,
+                                callbacks: {
+                                    label: function(context) {
+                                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                        const percentage = ((context.parsed / total) * 100).toFixed(1);
+                                        return `${context.label}: ${context.parsed} (${percentage}%)`;
+                                    }
+                                }
+                            }
+                        },
+                        cutout: '60%',
+                        animation: {
+                            animateScale: true,
+                            duration: 1500,
+                            easing: 'easeInOutCubic'
+                        }
+                    }
+                });
+            }
+
+            // Gráfica de Oportunidad por Procedimiento (Bar Chart)
+            const opCtx = document.getElementById('opChart')?.getContext('2d');
+            if (opCtx) {
+                new Chart(opCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Oncología', 'Cirugía', 'Radioterapia', 'Quimioterapia', 'Consulta'],
+                        datasets: [{
+                            label: 'Días promedio',
+                            data: [7.2, 5.8, 8.1, 6.3, 4.2],
+                            backgroundColor: [
+                                vidanovaColors.primary,
+                                vidanovaColors.purple,
+                                vidanovaColors.tertiary,
+                                vidanovaColors.pink,
+                                vidanovaColors.secondary
+                            ],
+                            borderColor: [
+                                vidanovaColors.primary,
+                                vidanovaColors.purple,
+                                vidanovaColors.tertiary,
+                                vidanovaColors.pink,
+                                vidanovaColors.secondary
+                            ],
+                            borderWidth: 2,
+                            borderRadius: 8,
+                            borderSkipped: false
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                backgroundColor: vidanovaColors.dark,
+                                titleColor: '#ffffff',
+                                bodyColor: '#ffffff',
+                                borderColor: vidanovaColors.primary,
+                                borderWidth: 2,
+                                cornerRadius: 8,
+                                callbacks: {
+                                    label: function(context) {
+                                        return `Promedio: ${context.parsed.y} días`;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: '#e2e8f0',
+                                    drawBorder: false
+                                },
+                                ticks: {
+                                    color: vidanovaColors.gray,
+                                    font: {
+                                        size: 11,
+                                        weight: '500'
+                                    },
+                                    callback: function(value) {
+                                        return value + ' días';
+                                    }
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                },
+                                ticks: {
+                                    color: vidanovaColors.gray,
+                                    font: {
+                                        size: 11,
+                                        weight: '600'
+                                    },
+                                    maxRotation: 45
+                                }
+                            }
+                        },
+                        animation: {
+                            duration: 1500,
+                            easing: 'easeInOutCubic'
+                        },
+                        interaction: {
+                            intersect: false,
+                            mode: 'index'
+                        }
+                    }
+                });
+            }
+        }
+
+        // Funciones auxiliares para actualización dinámica de datos
+        function updateKPIs(data) {
+            // Actualizar valores KPI dinámicamente
+            document.querySelector('.kpi.blue .kpi-value').textContent = data.totalOrdenar || '156';
+            document.querySelector('.kpi.purple .kpi-value').textContent = data.realizados || '89';
+            document.querySelector('.kpi.teal .kpi-value').textContent = data.agendados || '42';
+            document.querySelector('.kpi.pink .kpi-value').textContent = data.pendientes || '25';
+            document.querySelector('.kpi.gray .kpi-value').textContent = data.promedioDias || '7.2';
+        }
+
+        // Función para mostrar estado de carga
+        function showLoading(elementId) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.innerHTML = `
+                    <div class="chart-loading">
+                        <div class="loading-spinner"></div>
+                        <span style="margin-left: 1rem;">Cargando datos...</span>
+                    </div>
+                `;
+            }
+        }
+
+        // Simular carga de datos (reemplazar con llamadas reales a la API)
+        function loadDashboardData() {
+            // Mostrar loading
+            showLoading('statusChart');
+            showLoading('opChart');
+            
+            // Simular delay de API
+            setTimeout(() => {
+                initializeCharts();
+            }, 1500);
+        }
+
+        // Event listeners adicionales
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animaciones de entrada para las cards KPI
+            const kpiCards = document.querySelectorAll('.kpi');
+            kpiCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+
+            // Tooltips para botones de acción
+            const actionButtons = document.querySelectorAll('.btn-icon');
+            actionButtons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    const title = this.getAttribute('title');
+                    if (title) {
+                        // Aquí podrías implementar tooltips personalizados
+                        console.log('Tooltip:', title);
+                    }
+                });
+            });
+
+            // Búsqueda en tiempo real para la tabla (si necesitas implementarla)
+            const searchInput = document.querySelector('#searchInput'); // Si agregas un input de búsqueda
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase();
+                    const tableRows = document.querySelectorAll('.vn-table tbody tr');
+                    
+                    tableRows.forEach(row => {
+                        const text = row.textContent.toLowerCase();
+                        row.style.display = text.includes(searchTerm) ? '' : 'none';
+                    });
+                });
+            }
+        });
+    </script>
 </body>
 </html>
