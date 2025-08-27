@@ -1,103 +1,104 @@
 {% extends 'layout.html' %}
 {% load static %}
 
-{% block title %}Pagina inicial{% endblock %}
+{% block title %}Indicadores | Tablero de Control{% endblock %}
 
 {% block content %}
   <header class="header">
-    <h1>📊 Tablero de control:</h1>
+    <h1>📊 Tablero de Indicadores</h1>
+    <p class="subtitle">Monitorea el estado de los casos y procedimientos médicos en tiempo real.</p>
     <article class="card danger"> 
-      <p>Sistema de seguimiento</p>
       <div class="stats">
-        <div class="stat red">2<br><span>Alerta Crítica</span></div>
-        <div class="stat yellow">3<br><span>Advertencia</span></div>
-        <div class="stat green">4<br><span>En Tiempo</span></div>
-        <div class="stat blue">9<br><span>Total Casos</span></div>
+        <div class="stat red" title="Casos críticos">2<br><span>Alerta Crítica</span></div>
+        <div class="stat yellow" title="Casos en advertencia">3<br><span>Advertencia</span></div>
+        <div class="stat green" title="Casos en tiempo">4<br><span>En Tiempo</span></div>
+        <div class="stat blue" title="Total de casos">9<br><span>Total Casos</span></div>
       </div>
     </article>  
   </header>
 
   <section class="search">
-    <input type="text" placeholder="🔍 Buscar Paciente o Tipo de caso">
+    <input type="text" placeholder="🔍 Buscar paciente, caso o procedimiento" aria-label="Buscar">
+    <button class="btn" title="Buscar"><i class="bx bx-search"></i></button>
   </section>
 
   <main class="cards">
-    <!-- Tarjeta Paciente -->
-    <article class="card danger">
+    <!-- Tarjeta Paciente Crítico -->
+    <article class="card danger" tabindex="0" aria-label="Caso crítico de Mario Gonzáles">
       <header>
         <h2>🧑 Mario Gonzáles</h2>
-        <p>Captación 2025-04-06 • ⏳ 12 Días</p>
-        <span class="badge red">Crítico: Supera 5 días para primera consulta</span>
+        <p>Captación: <strong>2025-04-06</strong> • ⏳ <strong>12 Días</strong></p>
+        <span class="badge red" title="Supera 5 días para primera consulta">Crítico</span>
       </header>
-      <div class="content">
+      <div class="content columns">
         <div class="column">
-          <h3>📋 Resumen del Caso Médico</h3>
+          <h3>📋 Resumen Médico</h3>
           <ul>
-            <li>Tipo de Caso: Urgencia Oncológica</li>
-            <li>Tipo de Procedimiento: Quimioterapia</li>
+            <li><strong>Tipo de Caso:</strong> Urgencia Oncológica</li>
+            <li><strong>Procedimiento:</strong> Quimioterapia</li>
           </ul>
-          <h3>🏥 Información del Prestador</h3>
+          <h3>🏥 Prestador</h3>
           <ul>
-            <li>Prestador: OncoSalud</li>
-            <li>Barreras: Administrativas</li>
+            <li><strong>Institución:</strong> OncoSalud</li>
+            <li><strong>Barreras:</strong> Administrativas</li>
           </ul>
         </div>
         <div class="column">
-          <h3>📌 Estado del Proceso</h3>
+          <h3>📌 Estado</h3>
           <ul>
-            <li>Solicitud: Pendiente</li>
-            <li>Fecha Programada: 2025-04-20</li>
+            <li><strong>Solicitud:</strong> Pendiente</li>
+            <li><strong>Fecha Programada:</strong> 2025-04-20</li>
           </ul>
-          <h3>🛤 Seguimiento y Ruta</h3>
+          <h3>🛤 Ruta</h3>
           <ul>
             <li>En proceso de asignación</li>
           </ul>
         </div>
       </div>
       <footer>
-        <button class="btn">Ver Historia</button>
+        <button class="btn"><i class="bx bx-folder-open"></i> Ver Historia</button>
       </footer>
     </article>
 
-    <!-- Otra tarjeta -->
-    <article class="card warning">
+    <!-- Tarjeta Paciente Advertencia -->
+    <article class="card warning" tabindex="0" aria-label="Caso advertencia de Mario Gonzáles">
       <header>
         <h2>🧑 Mario Gonzáles</h2>
-        <p>Captación 2025-04-06 • ⏳ 12 Días</p>
-        <span class="badge yellow">Alerta: Supera 5 días para primera consulta</span>
+        <p>Captación: <strong>2025-04-06</strong> • ⏳ <strong>12 Días</strong></p>
+        <span class="badge yellow" title="Advertencia: Supera 5 días para primera consulta">Advertencia</span>
       </header>
-      <div class="content">
+      <div class="content columns">
         <div class="column">
-          <h3>📋 Resumen del Caso Médico</h3>
+          <h3>📋 Resumen Médico</h3>
           <ul>
-            <li>Tipo de Caso: Urgencia Oncológica</li>
-            <li>Tipo de Procedimiento: Radioterapia</li>
+            <li><strong>Tipo de Caso:</strong> Urgencia Oncológica</li>
+            <li><strong>Procedimiento:</strong> Radioterapia</li>
           </ul>
-          <h3>🏥 Información del Prestador</h3>
+          <h3>🏥 Prestador</h3>
           <ul>
-            <li>Prestador: SaludVida</li>
-            <li>Barreras: Ninguna</li>
+            <li><strong>Institución:</strong> SaludVida</li>
+            <li><strong>Barreras:</strong> Ninguna</li>
           </ul>
         </div>
         <div class="column">
-          <h3>📌 Estado del Proceso</h3>
+          <h3>📌 Estado</h3>
           <ul>
-            <li>Solicitud: Aprobada</li>
-            <li>Fecha Programada: 2025-04-22</li>
+            <li><strong>Solicitud:</strong> Aprobada</li>
+            <li><strong>Fecha Programada:</strong> 2025-04-22</li>
           </ul>
-          <h3>🛤 Seguimiento y Ruta</h3>
+          <h3>🛤 Ruta</h3>
           <ul>
             <li>Consulta en clínica asignada</li>
           </ul>
         </div>
       </div>
       <footer>
-        <button class="btn">Ver Historia</button>
+        <button class="btn"><i class="bx bx-folder-open"></i> Ver Historia</button>
       </footer>
     </article>
   </main>
 
   <footer class="footer">
-    <p>📌 Tipo de Caso • Tipo de Procedimiento • Estado de la Solicitud • Fecha de Solicitud • Fecha de Cita Programada • Prestador del Servicio • Barreras Identificadas • Observaciones Relevantes • Ruta Asistencial • Mes de Registro</p>
+    <p>📌 <strong>Campos:</strong> Tipo de Caso • Procedimiento • Estado • Fechas • Prestador • Barreras • Observaciones • Ruta • Mes de Registro</p>
   </footer>
 {% endblock %}
