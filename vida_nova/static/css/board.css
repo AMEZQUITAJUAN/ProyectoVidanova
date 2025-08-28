@@ -5,23 +5,23 @@ body {
   color: #333;
 }
 
+/* Header */
 .header {
   text-align: center;
   padding: 1.5rem;
 }
-
 .header h1 {
   font-size: 2rem;
   color: #183ad6;
   margin-bottom: 0.5rem;
 }
-
 .header .subtitle {
   font-size: 1.1rem;
-  color: #555;
+  color: #706f6f;
   margin-bottom: 1rem;
 }
 
+/* Stats indicadores */
 .stats {
   display: flex;
   justify-content: center;
@@ -29,36 +29,32 @@ body {
   margin-top: 1rem;
   flex-wrap: wrap;
 }
-
 .stat {
-  padding: 0.5rem 1rem;
+  padding: 0.8rem 1.2rem;
   border-radius: 12px;
   font-size: 1.2rem;
   font-weight: bold;
   color: #fff;
+  min-width: 170px;
   text-align: center;
-  min-width: 100px;
 }
-
 .stat span {
   display: block;
   font-size: 0.8rem;
   font-weight: normal;
 }
+.stat.red { background: #e74c3c; }
+.stat.yellow { background: #f1c40f; color: #000; }
+.stat.green { background: #27ae60; }
+.stat.blue { background: #2f5f98; }
 
-.red { background: #e74c3c; }
-.yellow { background: #f1c40f; color: #000; }
-.green { background: #27ae60; }
-.blue { background: #8e9cff; }
-
+/* Buscador */
 .search {
   display: flex;
   justify-content: center;
-  align-items: center;
   gap: 0.5rem;
   margin: 1.5rem 0;
 }
-
 .search input {
   width: 50%;
   max-width: 400px;
@@ -66,39 +62,34 @@ body {
   border-radius: 20px;
   border: 1px solid #183ad6;
   font-size: 1rem;
-  background: #f8f9fa;
-  transition: border 0.2s;
+  background: #fff;
 }
-
 .search input:focus {
   border: 2px solid #8f4392;
   outline: none;
 }
-
 .search .btn {
-  padding: 0.7rem 1rem;
+  padding: 0.7rem 1.2rem;
   border-radius: 20px;
   background: #183ad6;
   color: #fff;
   border: none;
   cursor: pointer;
   font-size: 1.1rem;
-  transition: background 0.2s;
 }
-
 .search .btn:hover {
   background: #8f4392;
 }
 
+/* Cards */
 .cards {
   display: grid;
   gap: 2rem;
   grid-template-columns: 1fr;
-  max-width: 900px;
+  max-width: 950px;
   margin: auto;
   padding: 1rem;
 }
-
 .card {
   background: #fff;
   border-radius: 16px;
@@ -106,26 +97,18 @@ body {
   box-shadow: 0 4px 16px rgba(24,58,214,0.08);
   transition: box-shadow 0.2s;
 }
-
 .card:hover {
   box-shadow: 0 8px 24px rgba(24,58,214,0.18);
 }
-
-.card header {
-  margin-bottom: 1rem;
-}
-
 .card header h2 {
   font-size: 1.3rem;
-  color: #183ad6;
+  color: #0F2D47;
   margin: 0;
 }
-
 .card header p {
   color: #555;
   font-size: 1rem;
 }
-
 .badge {
   display: inline-block;
   padding: 0.3rem 0.7rem;
@@ -133,30 +116,20 @@ body {
   font-size: 0.8rem;
   font-weight: bold;
   margin-top: 0.5rem;
-  padding: 0.3rem 0.8rem;
-  border-radius: 8px;
-  font-weight: bold;
 }
-
 .badge.red { background: #ffcccc; color: #b30000; }
 .badge.yellow { background: #fff3cd; color: #856404; }
 
-.content {
-  gap: 2rem;
-  flex-wrap: wrap;
-}
-
+/* Contenido */
 .content.columns {
   display: flex;
   gap: 2rem;
   flex-wrap: wrap;
 }
-
 .column {
   flex: 1;
   min-width: 220px;
 }
-
 .column h3 {
   margin-top: 0.5rem;
   font-size: 1.05rem;
@@ -165,22 +138,18 @@ body {
   border-bottom: 1px solid #eee;
   padding-bottom: 0.2rem;
 }
-
 .column ul {
   margin: 0.3rem 0 1rem;
   padding-left: 1rem;
   color: #444;
 }
+.column li { margin-bottom: 0.3rem; }
 
-.column li {
-  margin-bottom: 0.3rem;
-}
-
+/* Footer card */
 .card footer {
   text-align: right;
   margin-top: 1rem;
 }
-
 .btn {
   background: #183ad6;
   color: #fff;
@@ -192,34 +161,26 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  transition: background 0.2s;
 }
+.btn:hover { background: #8f4392; }
 
-.btn:hover {
-  background: #8f4392;
-}
-
+/* Footer general */
 .footer {
   text-align: center;
   font-size: 0.9rem;
   color: #555;
   padding: 1.5rem 0;
-  background: #f8f9fa;
   border-top: 1px solid #eee;
 }
 
-/* Accesibilidad y responsividad */
+/* Accesibilidad */
 .card[tabindex="0"]:focus {
   outline: 2px solid #183ad6;
   box-shadow: 0 0 0 4px #8f439233;
 }
 
+/* Responsive */
 @media (max-width: 700px) {
-  .content.columns {
-    flex-direction: column;
-    gap: 1rem;
-  }
-  .search input {
-    width: 90%;
-  }
+  .content.columns { flex-direction: column; }
+  .search input { width: 90%; }
 }

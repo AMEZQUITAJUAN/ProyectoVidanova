@@ -1,104 +1,110 @@
 {% extends 'layout.html' %}
 {% load static %}
 
-{% block title %}Indicadores | Tablero de Control{% endblock %}
+{% block title %}Seguimiento de Pacientes | VidaNova{% endblock %}
 
 {% block content %}
-  <header class="header">
-    <h1>📊 Tablero de Indicadores</h1>
-    <p class="subtitle">Monitorea el estado de los casos y procedimientos médicos en tiempo real.</p>
-    <article class="card danger"> 
-      <div class="stats">
-        <div class="stat red" title="Casos críticos">2<br><span>Alerta Crítica</span></div>
-        <div class="stat yellow" title="Casos en advertencia">3<br><span>Advertencia</span></div>
-        <div class="stat green" title="Casos en tiempo">4<br><span>En Tiempo</span></div>
-        <div class="stat blue" title="Total de casos">9<br><span>Total Casos</span></div>
+<link rel="stylesheet" href="{% static 'css/board.css' %}">
+
+<header class="header">
+  <h1>📌 Seguimiento de Pacientes</h1>
+  <p class="subtitle">Monitorea en tiempo real el estado de casos y procedimientos.</p>
+
+  <!-- Indicadores principales -->
+  <div class="stats">
+    <div class="stat red">2 <span>Críticos</span></div>
+    <div class="stat yellow">3 <span>Advertencia</span></div>
+    <div class="stat green">4 <span>En Tiempo</span></div>
+    <div class="stat blue">9 <span>Total Casos</span></div>
+  </div>
+</header>
+
+<!-- Buscador -->
+<section class="search">
+  <input type="text" placeholder="🔍 Buscar paciente, caso o procedimiento" aria-label="Buscar">
+  <button class="btn" title="Buscar"><i class="bx bx-search"></i></button>
+</section>
+
+<!-- Cards de pacientes -->
+<main class="cards">
+
+  <!-- Paciente Crítico -->
+  <article class="card danger" tabindex="0">
+    <header>
+      <h2>🧑 Mario Gonzáles</h2>
+      <p>Captación: <strong>2025-04-06</strong> • ⏳ <strong>12 días</strong></p>
+      <span class="badge red">Crítico Supera 5 días para primera consulta</span>
+    </header>
+    <div class="content columns">
+      <div class="column">
+        <h3>📋 Resumen Médico</h3>
+        <ul>
+          <li><strong>Tipo de Caso:</strong> Urgencia Oncológica</li>
+          <li><strong>Procedimiento:</strong> Quimioterapia</li>
+        </ul>
+        <h3>🏥 Prestador</h3>
+        <ul>
+          <li><strong>Institución:</strong> OncoSalud</li>
+          <li><strong>Barreras:</strong> Administrativas</li>
+        </ul>
       </div>
-    </article>  
-  </header>
-
-  <section class="search">
-    <input type="text" placeholder="🔍 Buscar paciente, caso o procedimiento" aria-label="Buscar">
-    <button class="btn" title="Buscar"><i class="bx bx-search"></i></button>
-  </section>
-
-  <main class="cards">
-    <!-- Tarjeta Paciente Crítico -->
-    <article class="card danger" tabindex="0" aria-label="Caso crítico de Mario Gonzáles">
-      <header>
-        <h2>🧑 Mario Gonzáles</h2>
-        <p>Captación: <strong>2025-04-06</strong> • ⏳ <strong>12 Días</strong></p>
-        <span class="badge red" title="Supera 5 días para primera consulta">Crítico</span>
-      </header>
-      <div class="content columns">
-        <div class="column">
-          <h3>📋 Resumen Médico</h3>
-          <ul>
-            <li><strong>Tipo de Caso:</strong> Urgencia Oncológica</li>
-            <li><strong>Procedimiento:</strong> Quimioterapia</li>
-          </ul>
-          <h3>🏥 Prestador</h3>
-          <ul>
-            <li><strong>Institución:</strong> OncoSalud</li>
-            <li><strong>Barreras:</strong> Administrativas</li>
-          </ul>
-        </div>
-        <div class="column">
-          <h3>📌 Estado</h3>
-          <ul>
-            <li><strong>Solicitud:</strong> Pendiente</li>
-            <li><strong>Fecha Programada:</strong> 2025-04-20</li>
-          </ul>
-          <h3>🛤 Ruta</h3>
-          <ul>
-            <li>En proceso de asignación</li>
-          </ul>
-        </div>
+      <div class="column">
+        <h3>📌 Estado</h3>
+        <ul>
+          <li><strong>Solicitud:</strong> Pendiente</li>
+          <li><strong>Fecha Programada:</strong> 2025-04-20</li>
+        </ul>
+        <h3>🛤 Ruta</h3>
+        <ul>
+          <li>En proceso de asignación</li>
+        </ul>
       </div>
-      <footer>
-        <button class="btn"><i class="bx bx-folder-open"></i> Ver Historia</button>
-      </footer>
-    </article>
+    </div>
+    <footer>
+      <button class="btn"><i class="bx bx-folder-open"></i> Ver Historia</button>
+    </footer>
+  </article>
 
-    <!-- Tarjeta Paciente Advertencia -->
-    <article class="card warning" tabindex="0" aria-label="Caso advertencia de Mario Gonzáles">
-      <header>
-        <h2>🧑 Mario Gonzáles</h2>
-        <p>Captación: <strong>2025-04-06</strong> • ⏳ <strong>12 Días</strong></p>
-        <span class="badge yellow" title="Advertencia: Supera 5 días para primera consulta">Advertencia</span>
-      </header>
-      <div class="content columns">
-        <div class="column">
-          <h3>📋 Resumen Médico</h3>
-          <ul>
-            <li><strong>Tipo de Caso:</strong> Urgencia Oncológica</li>
-            <li><strong>Procedimiento:</strong> Radioterapia</li>
-          </ul>
-          <h3>🏥 Prestador</h3>
-          <ul>
-            <li><strong>Institución:</strong> SaludVida</li>
-            <li><strong>Barreras:</strong> Ninguna</li>
-          </ul>
-        </div>
-        <div class="column">
-          <h3>📌 Estado</h3>
-          <ul>
-            <li><strong>Solicitud:</strong> Aprobada</li>
-            <li><strong>Fecha Programada:</strong> 2025-04-22</li>
-          </ul>
-          <h3>🛤 Ruta</h3>
-          <ul>
-            <li>Consulta en clínica asignada</li>
-          </ul>
-        </div>
+  <!-- Paciente en Advertencia -->
+  <article class="card warning" tabindex="0">
+    <header>
+      <h2>🧑 Laura Ramírez</h2>
+      <p>Captación: <strong>2025-04-10</strong> • ⏳ <strong>7 días</strong></p>
+      <span class="badge yellow">Advertencia Supera 5 días para primera consulta</span>
+    </header>
+    <div class="content columns">
+      <div class="column">
+        <h3>📋 Resumen Médico</h3>
+        <ul>
+          <li><strong>Tipo de Caso:</strong> Control Post-quirúrgico</li>
+          <li><strong>Procedimiento:</strong> Radioterapia</li>
+        </ul>
+        <h3>🏥 Prestador</h3>
+        <ul>
+          <li><strong>Institución:</strong> SaludVida</li>
+          <li><strong>Barreras:</strong> Ninguna</li>
+        </ul>
       </div>
-      <footer>
-        <button class="btn"><i class="bx bx-folder-open"></i> Ver Historia</button>
-      </footer>
-    </article>
-  </main>
+      <div class="column">
+        <h3>📌 Estado</h3>
+        <ul>
+          <li><strong>Solicitud:</strong> Aprobada</li>
+          <li><strong>Fecha Programada:</strong> 2025-04-22</li>
+        </ul>
+        <h3>🛤 Ruta</h3>
+        <ul>
+          <li>Consulta en clínica asignada</li>
+        </ul>
+      </div>
+    </div>
+    <footer>
+      <button class="btn"><i class="bx bx-folder-open"></i> Ver Historia</button>
+    </footer>
+  </article>
 
-  <footer class="footer">
-    <p>📌 <strong>Campos:</strong> Tipo de Caso • Procedimiento • Estado • Fechas • Prestador • Barreras • Observaciones • Ruta • Mes de Registro</p>
-  </footer>
+</main>
+
+<footer class="footer">
+  <p>📌 <strong>Campos:</strong> Tipo de Caso • Procedimiento • Estado • Fechas • Prestador • Barreras • Ruta</p>
+</footer>
 {% endblock %}
