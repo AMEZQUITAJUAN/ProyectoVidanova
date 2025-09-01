@@ -1,59 +1,14 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vidanova - Tablero Administrativo</title>
-    {% load static %}
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
     <link href="{% static 'css/adminboard.css' %}" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 </head>
 <body>
     <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <div class="logo">
-                <i class="fas fa-heartbeat"></i>
-                <h1>Vidanova</h1>
-            </div>
-            <p class="subtitle">Tablero de control</p>
-        </div>
-        
-        <nav class="sidebar-nav">
-            <div class="nav-section">
-                <h3>Principal</h3>
-                <a href="#" class="nav-item active">
-                    <i class="fas fa-chart-bar"></i>
-                    <span>Dashboard</span>
-                </a>
-                <a href="#" class="nav-item">
-                    <i class="fas fa-users"></i>
-                    <span>Pacientes</span>
-                </a>
-                <a href="#" class="nav-item">
-                    <i class="fas fa-calendar-alt"></i>
-                    <span>Citas</span>
-                </a>
-            </div>
-            
-            <div class="nav-section">
-                <h3>Gestión</h3>
-                <a href="#" class="nav-item">
-                    <i class="fas fa-file-medical"></i>
-                    <span>Procedimientos</span>
-                </a>
-                <a href="#" class="nav-item">
-                    <i class="fas fa-user-md"></i>
-                    <span>Personal Médico</span>
-                </a>
-                <a href="#" class="nav-item">
-                    <i class="fas fa-cog"></i>
-                    <span>Configuración</span>
-                </a>
-            </div>
-        </nav>
-    </div>
-
     <!-- Main Content -->
     <div class="main-content">
         <!-- Header -->
@@ -686,3 +641,4 @@
     </script>
 </body>
 </html>
+{% endblock %}
