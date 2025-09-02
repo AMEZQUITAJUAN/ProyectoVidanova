@@ -84,17 +84,18 @@ body {
 /* Cards */
 .cards {
   display: grid;
-  gap: 2rem;
+  gap: 1.2rem;
   grid-template-columns: 1fr;
   max-width: 950px;
   margin: auto;
-  padding: 1rem;
+  padding: 0.5rem;
 }
 .card {
   background: #fff;
   border-radius: 16px;
-  padding: 1.5rem;
+  padding: 1rem 1.2rem;
   box-shadow: 0 4px 16px rgba(24,58,214,0.08);
+  margin-bottom: 1.2rem;
   transition: box-shadow 0.2s;
 }
 .card:hover {
@@ -123,7 +124,7 @@ body {
 /* Contenido */
 .content.columns {
   display: flex;
-  gap: 2rem;
+  gap: 1rem;
   flex-wrap: wrap;
 }
 .column {

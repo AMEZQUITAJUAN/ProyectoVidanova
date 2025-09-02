@@ -1,23 +1,39 @@
 /* =================================
-   SIDEBAR CON EFECTO HOVER - VIDANOVA
+   SIDEBAR RESPONSIVO Y CON EFECTO HOVER
    ================================= */
 
+/* Sidebar base */
 .side-menu {
     position: fixed;
     top: 0;
     left: 0;
-    width: 80px; /* Ancho colapsado (solo íconos) */
     height: 100vh;
+    width: 80px;
     background: linear-gradient(135deg, #2c5aa0 0%, #1e3a5f 100%);
     transition: width 0.3s ease-in-out;
-    overflow: hidden;
+    overflow-x: hidden;
     z-index: 1000;
     box-shadow: 3px 0 15px rgba(0, 0, 0, 0.15);
 }
 
-/* Expandir sidebar al hacer hover */
+/* Expandir sidebar al hacer hover en escritorio */
+body.sidebar-expanded .side-menu,
 .side-menu:hover {
-    width: 280px; /* Ancho expandido */
+    width: 280px;
+}
+
+/* Ocultar sidebar en móvil por defecto */
+@media (max-width: 768px) {
+    .side-menu {
+        width: 0 !important;
+        min-width: 0 !important;
+        overflow: hidden;
+        transition: width 0.3s;
+    }
+    body.sidebar-mobile-open .side-menu {
+        width: 250px !important;
+        min-width: 250px !important;
+    }
 }
 
 /* =================================
@@ -76,6 +92,11 @@
     cursor: pointer;
     border-radius: 0 25px 25px 0;
     transition: all 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    color: white;
+    font-size: 16px;
 }
 
 .sidebar li:hover {
@@ -83,18 +104,6 @@
     transform: translateX(5px);
 }
 
-.sidebar li a,
-.sidebar li {
-    display: flex;
-    align-items: center;
-    padding: 15px 20px;
-    color: white;
-    text-decoration: none;
-    font-size: 16px;
-    transition: all 0.3s ease-in-out;
-}
-
-/* Íconos */
 .sidebar li i {
     font-size: 24px;
     min-width: 40px;
@@ -110,123 +119,22 @@
 
 /* Texto de los enlaces */
 .sidebar li samp {
-    margin-left: 15px;
-    white-space: nowrap;
     opacity: 0;
-    transform: translateX(-20px);
-    transition: all 0.3s ease-in-out;
-    font-weight: 500;
+    margin-left: 10px;
+    transition: opacity 0.3s, margin-left 0.3s;
+    white-space: nowrap;
 }
 
-/* Mostrar texto al hacer hover en la sidebar */
+body.sidebar-expanded .sidebar li samp,
 .side-menu:hover .sidebar li samp {
     opacity: 1;
-    transform: translateX(0);
+    margin-left: 10px;
 }
-
-/* Efecto de tooltip para cuando está colapsada */
-.sidebar li::before {
-    content: attr(data-tooltip);
-    position: absolute;
-    left: 80px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-size: 14px;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease-in-out;
-    z-index: 1001;
-}
-
-.sidebar li:hover::before {
-    opacity: 1;
-}
-
-/* Ocultar tooltip cuando la sidebar está expandida */
-.side-menu:hover .sidebar li::before {
-    opacity: 0;
-}
-
-/* =================================
-   CONTENIDO PRINCIPAL
-   ================================= */
-
-.content {
-    margin-left: 80px; /* Margen igual al ancho colapsado */
-    padding: 30px;
-    transition: margin-left 0.3s ease-in-out;
-    min-height: 100vh;
-    background: #f8f9fa;
-}
-
-.content h1 {
-    color: #333;
-    font-size: 28px;
-    margin-bottom: 10px;
-    font-weight: 600;
-}
-
-.content p {
-    color: #666;
-    font-size: 16px;
-    line-height: 1.6;
-}
-
-/* =================================
-   RESPONSIVE DESIGN
-   ================================= */
-
-@media (max-width: 768px) {
-    .side-menu {
-        width: 0;
-        overflow: hidden;
-    }
-    
-    .side-menu:hover {
-        width: 250px;
-    }
-    
-    .content {
-        margin-left: 0;
-    }
-    
-    /* Botón hamburguesa para móvil (opcional) */
-    .menu-toggle {
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        z-index: 1002;
-        background: #667eea;
-        color: white;
-        border: none;
-        padding: 10px;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 20px;
-    }
-}
-
-/* =================================
-   ANIMACIONES ADICIONALES
-   ================================= */
-
-/* Efecto de entrada escalonado para los elementos del menú */
-.side-menu:hover .sidebar li:nth-child(1) samp { transition-delay: 0.1s; }
-.side-menu:hover .sidebar li:nth-child(2) samp { transition-delay: 0.15s; }
-.side-menu:hover .sidebar li:nth-child(3) samp { transition-delay: 0.2s; }
-.side-menu:hover .sidebar li:nth-child(4) samp { transition-delay: 0.25s; }
-.side-menu:hover .sidebar li:nth-child(5) samp { transition-delay: 0.3s; }
-.side-menu:hover .sidebar li:nth-child(6) samp { transition-delay: 0.35s; }
 
 /* Indicador de elemento activo */
 .sidebar li.active {
-    background: rgba(255, 255, 255, 0.2);
-    border-right: 4px solid #ffd700;
+    background: rgba(255, 255, 255, 0.18);
+    color: #ffd700;
 }
 
 .sidebar li.active i {
@@ -239,14 +147,38 @@
 }
 
 .side-menu::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
+    background: transparent;
 }
 
 .side-menu::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
+    background: #1e3a5f;
     border-radius: 3px;
 }
 
 .side-menu::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.5);
+    background: #2c5aa0;
+}
+
+/* =================================
+   RESPONSIVE DESIGN
+   ================================= */
+
+@media (max-width: 768px) {
+    /* Botón hamburguesa para móvil (opcional) */
+    .menu-toggle {
+        display: block !important;
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        z-index: 1100;
+        background: #2c5aa0;
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+        font-size: 2rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        cursor: pointer;
+    }
 }

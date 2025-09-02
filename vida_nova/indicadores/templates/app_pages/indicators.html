@@ -6,20 +6,25 @@
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/board.css' %}">
 
+<h1>📋 Estado genera de los pacientes:</h1>
 <header class="header">
-  <h1>📌 Seguimiento de Pacientes</h1>
-  <p class="subtitle">Monitorea en tiempo real el estado de casos y procedimientos.</p>
+  
 
   <!-- Indicadores principales -->
+
   <div class="stats">
+    
     <div class="stat red">2 <span>Críticos</span></div>
     <div class="stat yellow">3 <span>Advertencia</span></div>
     <div class="stat green">4 <span>En Tiempo</span></div>
     <div class="stat blue">9 <span>Total Casos</span></div>
+    
   </div>
+
 </header>
 
 <!-- Buscador -->
+ 
 <section class="search">
   <input type="text" placeholder="🔍 Buscar paciente, caso o procedimiento" aria-label="Buscar">
   <button class="btn" title="Buscar"><i class="bx bx-search"></i></button>
