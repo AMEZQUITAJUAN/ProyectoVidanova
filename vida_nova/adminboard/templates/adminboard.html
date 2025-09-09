@@ -1,544 +1,473 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vidanova - Tablero Administrativo</title>
-    {% load static %}
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
     <link href="{% static 'css/adminboard.css' %}" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        /* Estilos básicos para demostración - tu CSS personalizado irá aquí */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8fafc; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+        .section { margin-bottom: 30px; }
+        .card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+        .btn { padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; }
+        .btn.primary { background: #3b82f6; color: white; }
+        .btn.secondary { background: #6b7280; color: white; }
+        .alert { padding: 12px; border-radius: 8px; margin: 8px 0; }
+        .alert.critical { background: #fef2f2; border-left: 4px solid #ef4444; color: #dc2626; }
+        .alert.warning { background: #fffbeb; border-left: 4px solid #f59e0b; color: #d97706; }
+        .alert.success { background: #f0fdf4; border-left: 4px solid #22c55e; color: #16a34a; }
+        .alert.info { background: #eff6ff; border-left: 4px solid #3b82f6; color: #2563eb; }
+    </style>
 </head>
 <body>
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <div class="logo">
-                <i class="fas fa-heartbeat"></i>
-                <h1>Vidanova</h1>
-            </div>
-            <p class="subtitle">Tablero de control</p>
-        </div>
-        
-        <nav class="sidebar-nav">
-            <div class="nav-section">
-                <h3>Principal</h3>
-                <a href="#" class="nav-item active">
-                    <i class="fas fa-chart-bar"></i>
-                    <span>Dashboard</span>
-                </a>
-                <a href="#" class="nav-item">
-                    <i class="fas fa-users"></i>
-                    <span>Pacientes</span>
-                </a>
-                <a href="#" class="nav-item">
-                    <i class="fas fa-calendar-alt"></i>
-                    <span>Citas</span>
-                </a>
-            </div>
-            
-            <div class="nav-section">
-                <h3>Gestión</h3>
-                <a href="#" class="nav-item">
-                    <i class="fas fa-file-medical"></i>
-                    <span>Procedimientos</span>
-                </a>
-                <a href="#" class="nav-item">
-                    <i class="fas fa-user-md"></i>
-                    <span>Personal Médico</span>
-                </a>
-                <a href="#" class="nav-item">
-                    <i class="fas fa-cog"></i>
-                    <span>Configuración</span>
-                </a>
-            </div>
-        </nav>
-    </div>
-
-    <!-- Main Content -->
-    <div class="main-content">
+    <div class="container">
         <!-- Header -->
-        <header class="header">
-            <div class="header-left">
-                <button class="menu-toggle">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <h2>Tablero Administrativo</h2>
-            </div>
-            
-            <div class="header-right">
-                <div class="user-menu">
-                    <div class="user-info">
-                        <span class="user-name">Admin Usuario</span>
-                        <span class="user-role">Super Administrador</span>
-                    </div>
-                    <div class="user-avatar">
-                        <i class="fas fa-user"></i>
-                    </div>
-                </div>
+        <header class="section">
+            <div class="card">
+                <h1><i class="fas fa-chart-line"></i> Tablero Administrativo</h1>
             </div>
         </header>
 
         <!-- Filtros -->
-        <section class="vn-card filters-card">
-            <h2 class="card-title">
-                <i class="fas fa-filter"></i>
-                Filtros
-            </h2>
-            <form class="filters">
-                <div class="grid-4">
-                    <div class="form-group">
-                        <label for="date_from">Desde</label>
-                        <input type="date" id="date_from" name="date_from" value="2024-01-01">
+        <section class="section">
+            <div class="card">
+                <h2><i class="fas fa-filter"></i> Filtros</h2>
+                <form class="filters">
+                    <div class="grid-4" style="margin-top: 16px;">
+                        <div class="form-group">
+                            <label for="date_from">Desde</label>
+                            <input type="date" id="date_from" name="date_from" value="2024-01-01">
+                        </div>
+                        <div class="form-group">
+                            <label for="date_to">Hasta</label>
+                            <input type="date" id="date_to" name="date_to" value="2024-12-31">
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Estado de la Solicitud</label>
+                            <select id="status" name="status">
+                                <option value="">Todos</option>
+                                <option value="pendiente">Pendiente</option>
+                                <option value="en_gestion">En gestión</option>
+                                <option value="por_gestionar">Por gestionar</option>
+                                <option value="agendado">Agendado</option>
+                                <option value="realizado">Realizado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="procedure">Tipo de Procedimientos</label>
+                            <select id="procedure" name="procedure">
+                                <option value="">Todos</option>
+                                <option value="cirugia">Cirugía</option>
+                                <option value="radioterapia">Radioterapia</option>
+                                <option value="quimioterapia">Quimioterapia</option>
+                                <option value="consulta">Consulta</option>
+                                <option value="imagenes">Imágenes</option>
+                                <option value="laboratorio">Laboratorio</option>
+                                <option value="patologia">Patología</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="date_to">Hasta</label>
-                        <input type="date" id="date_to" name="date_to" value="2024-12-31">
+                    
+                    <!-- Sección Agendamientos -->
+                    <div style="margin-top: 24px;">
+                        <h3>Agendamientos</h3>
+                        <div class="grid-4" style="margin-top: 12px;">
+                            <div class="form-group">
+                                <label for="appointment_type">Tipo de Paciente</label>
+                                <select id="appointment_type" name="appointment_type">
+                                    <option value="">Todos</option>
+                                    <option value="incidentes">Incidentes</option>
+                                    <option value="prebalentes">Prebalentes</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="agrupadores">Agrupadores</label>
+                                <select id="priority" name="priority">
+                                    <option value="">Todas</option>
+                                    <option value="agendado">Agendado</option>
+                                    <option value="realizado">Realizado</option>
+                                    <option value="En programación. prestador">En programación. prestador</option>
+                                    <option value="diferido">Diferido</option>
+                                    <option value="No Acepta">No Acepta</option>
+                                    <option value="Sin Agenda">Sin Agenda</option>
+                                    <option value="Control mayor 3 meses">Control mayor 3 meses</option>
+                                    <option value="Pendiente reporte">Pendiente reporte</option>
+                                    <option value="En gestión interna">En gestión interna</option>
+                                    <option value="Fallecido">Fallecido</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="status">Estado de la Solicitud</label>
-                        <select id="status" name="status">
-                            <option value="">Todos</option>
-                            <option value="pendiente">Pendiente</option>
-                            <option value="en_gestion">En gestión</option>
-                            <option value="por_gestionar">Por gestionar</option>
-                            <option value="agendado">Agendado</option>
-                            <option value="realizado">Realizado</option>
-                        </select>
+                    
+                    <div class="filters-actions" style="margin-top: 20px;">
+                        <button class="btn primary" type="submit">
+                            <i class="fas fa-search"></i> Aplicar
+                        </button>
+                        <button class="btn secondary" type="button">
+                            <i class="fas fa-times"></i> Limpiar
+                        </button>
                     </div>
-                    <div class="form-group">
-                        <label for="procedure">Tipo de Procedimiento</label>
-                        <select id="procedure" name="procedure">
-                            <option value="">Todos</option>
-                            <option value="oncologia">Oncología</option>
-                            <option value="cirugia">Cirugía</option>
-                            <option value="radioterapia">Radioterapia</option>
-                            <option value="quimioterapia">Quimioterapia</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="filters-actions">
-                    <button class="btn primary" type="submit">
-                        <i class="fas fa-search"></i>
-                        Aplicar
-                    </button>
-                    <button class="btn ghost" type="button">
-                        <i class="fas fa-times"></i>
-                        Limpiar
-                    </button>
-                </div>
-            </form>
+                </form>
+            </div>
         </section>
 
-        <!-- KPI Cards -->
-        <section class="kpi-grid">
-            <div class="vn-card kpi blue">
-                <div class="kpi-header">
-                    <h3>Total Ordenar</h3>
-                    <i class="fas fa-clipboard-list"></i>
+        <!-- Tiempos Críticos -->
+        <section class="section">
+            <div class="card">
+                <h2><i class="fas fa-exclamation-triangle"></i> Tiempos críticos:</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 16px;">
+                    <div class="alert critical">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-exclamation-circle" style="font-size: 24px;"></i>
+                            <div>
+                                <div style="font-size: 24px; font-weight: bold;">2</div>
+                                <div>Alerta Crítica</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert warning">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-clock" style="font-size: 24px;"></i>
+                            <div>
+                                <div style="font-size: 24px; font-weight: bold;">3</div>
+                                <div>Advertencia</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert success">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-check-circle" style="font-size: 24px;"></i>
+                            <div>
+                                <div style="font-size: 24px; font-weight: bold;">4</div>
+                                <div>En Tiempo</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert info">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-list" style="font-size: 24px;"></i>
+                            <div>
+                                <div style="font-size: 24px; font-weight: bold;">9</div>
+                                <div>Total Casos</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="kpi-value">156</div>
-                <div class="kpi-trend up">
-                    <i class="fas fa-arrow-up"></i>
-                    <span>+12%</span>
-                </div>
+                <!-- Buscador -->
+                <section class="search">
+                    <input type="text" placeholder="🔍 Buscar paciente, caso o procedimiento" aria-label="Buscar">
+                    <button class="btn" title="Buscar"><i class="bx bx-search"></i></button>
+                </section>
             </div>
-            
-            <div class="vn-card kpi purple">
-                <div class="kpi-header">
-                    <h3>Realizados</h3>
-                    <i class="fas fa-check-circle"></i>
+        </section>
+
+        <!-- KPI Grid -->
+        <section class="section">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                <!-- Total Ordenar -->
+                <div class="card" style="text-align: center; border-top: 4px solid #3b82f6;">
+                    <div style="font-size: 14px; color: #6b7280; margin-bottom: 8px;">Total Ordenar</div>
+                    <div style="font-size: 36px; font-weight: bold; color: #1f2937;">156</div>
+                    <div style="font-size: 12px; color: #6b7280;">12%</div>
                 </div>
-                <div class="kpi-value">89</div>
-                <div class="kpi-trend up">
-                    <i class="fas fa-arrow-up"></i>
-                    <span>+8%</span>
+                
+                <!-- Realizados -->
+                <div class="card" style="text-align: center; border-top: 4px solid #10b981;">
+                    <div style="font-size: 14px; color: #6b7280; margin-bottom: 8px;">Realizados</div>
+                    <div style="font-size: 36px; font-weight: bold; color: #1f2937;">89</div>
+                    <div style="font-size: 12px; color: #6b7280;">10%</div>
                 </div>
-            </div>
-            
-            <div class="vn-card kpi teal">
-                <div class="kpi-header">
-                    <h3>Agendados</h3>
-                    <i class="fas fa-calendar-check"></i>
+                
+                <!-- Total Ordenar (duplicado) -->
+                <div class="card" style="text-align: center; border-top: 4px solid #3b82f6;">
+                    <div style="font-size: 14px; color: #6b7280; margin-bottom: 8px;">Agendados</div>
+                    <div style="font-size: 36px; font-weight: bold; color: #1f2937;">42</div>
+                    <div style="font-size: 12px; color: #6b7280;">15%</div>
                 </div>
-                <div class="kpi-value">42</div>
-                <div class="kpi-trend neutral">
-                    <i class="fas fa-minus"></i>
-                    <span>0%</span>
+                
+                <!-- Total Ordenar (otro) -->
+                <div class="card" style="text-align: center; border-top: 4px solid #f59e0b;">
+                    <div style="font-size: 14px; color: #6b7280; margin-bottom: 8px;">Pendientes</div>
+                    <div style="font-size: 36px; font-weight: bold; color: #1f2937;">25</div>
+                    <div style="font-size: 12px; color: #6b7280;">-5%</div>
                 </div>
-            </div>
-            
-            <div class="vn-card kpi pink">
-                <div class="kpi-header">
-                    <h3>Pendientes</h3>
-                    <i class="fas fa-clock"></i>
-                </div>
-                <div class="kpi-value">25</div>
-                <div class="kpi-trend down">
-                    <i class="fas fa-arrow-down"></i>
-                    <span>-5%</span>
-                </div>
-            </div>
-            
-            <div class="vn-card kpi gray">
-                <div class="kpi-header">
-                    <h3>Promedio Días</h3>
-                    <i class="fas fa-stopwatch"></i>
-                </div>
-                <div class="kpi-value">7.2</div>
-                <div class="kpi-trend up">
-                    <i class="fas fa-arrow-up"></i>
-                    <span>+1.2</span>
+                
+                <!-- Promedio Días -->
+                <div class="card" style="text-align: center; border-top: 4px solid #8b5cf6;">
+                    <div style="font-size: 14px; color: #6b7280; margin-bottom: 8px;">Promedio Días</div>
+                    <div style="font-size: 36px; font-weight: bold; color: #1f2937;">7.2</div>
+                    <div style="font-size: 12px; color: #6b7280;">7.2</div>
                 </div>
             </div>
         </section>
 
         <!-- Gráficas -->
-        <section class="grid-2">
-            <div class="vn-card chart-card">
-                <h2 class="card-title">
-                    <i class="fas fa-pie-chart"></i>
-                    Estado de la Solicitud
-                </h2>
-                <div class="chart-container">
-                    <canvas id="statusChart"></canvas>
-                </div>
-            </div>
-            
-            <div class="vn-card chart-card">
-                <h2 class="card-title">
-                    <i class="fas fa-bar-chart"></i>
-                    Oportunidad por Procedimiento
-                </h2>
-                <div class="chart-container">
-                    <canvas id="opChart"></canvas>
-                </div>
-            </div>
-        </section>
-
-        <!-- Workflow Visual -->
-        <section class="vn-card workflow-card">
-            <h2 class="card-title">
-                <i class="fas fa-sitemap"></i>
-                Flujo de Gestión
-            </h2>
-            <div class="workflow">
-                <div class="workflow-step">
-                    <div class="step-number">2</div>
-                    <div class="step-label">Total Ordenar</div>
+        <section class="section">
+            <div class="grid-2">
+                <div class="card">
+                    <h3><i class="fas fa-pie-chart"></i> Estado de la Solicitud</h3>
+                    <div style="height: 300px; margin-top: 16px;">
+                        <canvas id="statusChart"></canvas>
+                    </div>
+                    <div style="margin-top: 16px; font-size: 12px; color: #6b7280;">
+                        <span style="display: inline-block; width: 12px; height: 12px; background: #3b82f6; border-radius: 2px; margin-right: 8px;"></span>Pendiente
+                        <span style="display: inline-block; width: 12px; height: 12px; background: #10b981; border-radius: 2px; margin-left: 16px; margin-right: 8px;"></span>Agendado
+                        <span style="display: inline-block; width: 12px; height: 12px; background: #f59e0b; border-radius: 2px; margin-left: 16px; margin-right: 8px;"></span>Realizado
+                        <span style="display: inline-block; width: 12px; height: 12px; background: #ef4444; border-radius: 2px; margin-left: 16px; margin-right: 8px;"></span>Por Gestionar
+                    </div>
                 </div>
                 
-                <div class="workflow-arrow">
-                    <i class="fas fa-arrow-right"></i>
-                </div>
-                
-                <div class="workflow-step">
-                    <div class="step-number">2</div>
-                    <div class="step-label">Pendiente</div>
-                    <div class="step-percentage">2%</div>
-                </div>
-                
-                <div class="workflow-arrow">
-                    <i class="fas fa-arrow-down"></i>
-                </div>
-                
-                <div class="workflow-step">
-                    <div class="step-number">2</div>
-                    <div class="step-label">En gestión</div>
-                </div>
-                
-                <div class="workflow-arrow">
-                    <i class="fas fa-arrow-down"></i>
-                </div>
-                
-                <div class="workflow-step">
-                    <div class="step-number">2</div>
-                    <div class="step-label">Por gestionar</div>
-                </div>
-                
-                <div class="workflow-side">
-                    <div class="workflow-step">
-                        <div class="step-number">2</div>
-                        <div class="step-label">Agendas</div>
-                        <div class="step-percentage">2%</div>
+                <div class="card">
+                    <h3><i class="fas fa-bar-chart"></i> Oportunidad por Procedimientos</h3>
+                    <div style="height: 300px; margin-top: 16px;">
+                        <canvas id="procedureChart"></canvas>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Tabla detalle -->
-        <section class="vn-card table-card">
-            <h2 class="card-title">
-                <i class="fas fa-table"></i>
-                Detalle por Solicitud
-            </h2>
-            <div class="table-wrap">
-                <table class="vn-table">
-                    <thead>
-                        <tr>
-                            <th>
-                                <i class="fas fa-user"></i>
-                                Paciente
-                            </th>
-                            <th>
-                                <i class="fas fa-stethoscope"></i>
-                                Tipo de Procedimiento
-                            </th>
-                            <th>
-                                <i class="fas fa-info-circle"></i>
-                                Estado
-                            </th>
-                            <th>
-                                <i class="fas fa-calendar"></i>
-                                Fecha Solicitud
-                            </th>
-                            <th>
-                                <i class="fas fa-calendar-check"></i>
-                                Fecha Cita
-                            </th>
-                            <th>
-                                <i class="fas fa-clock"></i>
-                                Días
-                            </th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="patient-info">
-                                    <div class="patient-avatar">MP</div>
-                                    <div>
-                                        <strong>María Pérez</strong>
-                                        <small>ID: 12345</small>
+        <!-- Sección de Barreras y Próximas IPS -->
+
+        <section class="section">
+            <div class="card">
+                <h2 style="margin-bottom: 20px;">
+                    <i class="fas fa-chart-line" style="color:#3b82f6;"></i> Barreras
+                </h2>
+                <div class="grid-2">
+                    <!-- Barreras del paciente -->
+                    <div class="card" style="background: #f8fafc;">
+                        <h3 style="margin-bottom: 16px;">
+                            <i class="fas fa-exclamation-triangle" style="color:#f59e0b;"></i> Propios del paciente
+                        </h3>
+                        <ul style="list-style:none; padding:0;">
+                            <li style="display:flex; align-items:center; margin-bottom:14px;">
+                                <i class="fas fa-money-bill-wave" style="color:#13ff02; margin-right:8px;"></i>
+                                <span style="flex:1;"><strong>Económico</strong></span>
+                                <span style="background:#e6ffe6; color:#13ff02; border-radius:6px; padding:2px 10px; font-size:14px;">25%</span>
+                            </li>
+                            <li style="display:flex; align-items:center; margin-bottom:14px;">
+                                <i class="fas fa-users" style="color:#13ff02; margin-right:8px;"></i>
+                                <span style="flex:1;"><strong>Sociales</strong></span>
+                                <span style="background:#e6ffe6; color:#13ff02; border-radius:6px; padding:2px 10px; font-size:14px;">16%</span>
+                            </li>
+                            <li style="display:flex; align-items:center; margin-bottom:14px;">
+                                <i class="fas fa-home" style="color:#13ff02; margin-right:8px;"></i>
+                                <span style="flex:1;"><strong>Domicilio lejos</strong></span>
+                                <span style="background:#e6ffe6; color:#13ff02; border-radius:6px; padding:2px 10px; font-size:14px;">14%</span>
+                            </li>
+                            <li style="display:flex; align-items:center;">
+                                <i class="fas fa-phone-slash" style="color:#13ff02; margin-right:8px;"></i>
+                                <span style="flex:1;"><strong>Difícil comunicación</strong></span>
+                                <span style="background:#e6ffe6; color:#13ff02; border-radius:6px; padding:2px 10px; font-size:14px;">7%</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Barreras de la IPS -->
+                    <div class="card" style="background: #f8fafc;">
+                        <h3 style="margin-bottom: 16px;">
+                            <i class="fas fa-hospital" style="color:#3b82f6;"></i> Propios de la IPS
+                        </h3>
+                        <ul style="list-style:none; padding:0;">
+                            <li style="display:flex; align-items:center; margin-bottom:14px;">
+                                <i class="fas fa-calendar-times" style="color:#13ff02; margin-right:8px;"></i>
+                                <span style="flex:1;"><strong>Sin agendar</strong></span>
+                                <span style="background:#e6ffe6; color:#13ff02; border-radius:6px; padding:2px 10px; font-size:14px;">12%</span>
+                            </li>
+                            <li style="display:flex; align-items:center; margin-bottom:14px;">
+                                <i class="fas fa-file-alt" style="color:#13ff02; margin-right:8px;"></i>
+                                <span style="flex:1;"><strong>Demora de reportes</strong></span>
+                                <span style="background:#e6ffe6; color:#13ff02; border-radius:6px; padding:2px 10px; font-size:14px;">4%</span>
+                            </li>
+                            <li style="display:flex; align-items:center; margin-bottom:14px;">
+                                <i class="fas fa-user-clock" style="color:#13ff02; margin-right:8px;"></i>
+                                <span style="flex:1;"><strong>No disponibilidad</strong></span>
+                                <span style="background:#e6ffe6; color:#13ff02; border-radius:6px; padding:2px 10px; font-size:14px;">8%</span>
+                            </li>
+                            <li style="display:flex; align-items:center;">
+                                <i class="fas fa-pills" style="color:#13ff02; margin-right:8px;"></i>
+                                <span style="flex:1;"><strong>Insumos o medicamentos</strong></span>
+                                <span style="background:#e6ffe6; color:#13ff02; border-radius:6px; padding:2px 10px; font-size:14px;">10%</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>  
+        </section>
+        <!-- Tabla de Pacientes -->
+        <section class="section">
+            <div class="card">
+                <h2><i class="fas fa-users"></i> Detalle por Pacientes</h2>
+                <div style="overflow-x: auto; margin-top: 16px;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: #f8fafc; border-bottom: 2px solid #e5e7eb;">
+                                <th style="padding: 12px; text-align: left; font-weight: 600;">Paciente</th>
+                                <th style="padding: 12px; text-align: left; font-weight: 600;">Tipo de Procedimientos</th>
+                                <th style="padding: 12px; text-align: left; font-weight: 600;">CUPS</th>
+                                <th style="padding: 12px; text-align: left; font-weight: 600;">Servicio Solicitado</th>
+                                <th style="padding: 12px; text-align: left; font-weight: 600;">Estado</th>
+                                <th style="padding: 12px; text-align: left; font-weight: 600;">Barreras</th>
+                                <th style="padding: 12px; text-align: left; font-weight: 600;">Fecha Solicitud</th>
+                                <th style="padding: 12px; text-align: left; font-weight: 600;">Fecha Cita</th>
+                                <th style="padding: 12px; text-align: left; font-weight: 600;">Días</th>
+                                <th style="padding: 12px; text-align: left; font-weight: 600;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid #e5e7eb;">
+                                <td style="padding: 12px;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <div style="width: 32px; height: 32px; background: #3b82f6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold;">MP</div>
+                                        <div>
+                                            <div style="font-weight: 600;">María Pérez</div>
+                                            <div style="font-size: 12px; color: #6b7280;">ID: 12345</div>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="procedure-badge oncologia">Oncología</span>
-                            </td>
-                            <td>
-                                <span class="status-badge pendiente">Pendiente</span>
-                            </td>
-                            <td>15/01/2024</td>
-                            <td>22/01/2024</td>
-                            <td class="num">7</td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="btn-icon primary" title="Ver detalles">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    <button class="btn-icon secondary" title="Editar">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="patient-info">
-                                    <div class="patient-avatar">JG</div>
-                                    <div>
-                                        <strong>Juan García</strong>
-                                        <small>ID: 12346</small>
+                                </td>
+                                <td style="padding: 12px;">
+                                    <span style="background: #dbeafe; color: #1d4ed8; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">ONCOLOGÍA</span>
+                                </td>
+                                <td style="padding: 12px; font-family: monospace;">890278</td>
+                                <td style="padding: 12px;">
+                                    <div style="font-size: 13px;">
+                                        <div>Consulta de primera vez por</div>
+                                        <div>especialista en oncología</div>
                                     </div>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="procedure-badge cirugia">Cirugía</span>
-                            </td>
-                            <td>
-                                <span class="status-badge realizado">Realizado</span>
-                            </td>
-                            <td>10/01/2024</td>
-                            <td>18/01/2024</td>
-                            <td class="num">8</td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="btn-icon primary" title="Ver detalles">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    <button class="btn-icon secondary" title="Editar">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="patient-info">
-                                    <div class="patient-avatar">AL</div>
-                                    <div>
-                                        <strong>Ana López</strong>
-                                        <small>ID: 12347</small>
+                                </td>
+                                <td style="padding: 12px;">
+                                    <span style="background: #fef3c7; color: #d97706; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">PENDIENTE</span>
+                                </td>
+                                <td style="padding: 12px;">
+                                    <span style="font-size: 12px; color: #6b7280;">Disponibilidad del paciente</span>
+                                </td>
+                                <td style="padding: 12px; font-size: 13px;">14/01/2024</td>
+                                <td style="padding: 12px; font-size: 13px;">22/01/2024</td>
+                                <td style="padding: 12px; text-align: center; font-weight: 600;">7</td>
+                                <td style="padding: 12px;">
+                                    <div style="display: flex; gap: 4px;">
+                                        <button class="btn" style="padding: 6px 8px; background: #3b82f6; color: white; border-radius: 4px;">
+                                            <i class="fas fa-eye"></i>Ver
+                                        </button>
+                                        <button class="btn" style="padding: 6px 8px; background: #6b7280; color: white; border-radius: 4px;">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
                                     </div>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="procedure-badge radioterapia">Radioterapia</span>
-                            </td>
-                            <td>
-                                <span class="status-badge agendado">Agendado</span>
-                            </td>
-                            <td>20/01/2024</td>
-                            <td>25/01/2024</td>
-                            <td class="num">5</td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="btn-icon primary" title="Ver detalles">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    <button class="btn-icon secondary" title="Editar">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                </td>
+                            </tr>
+                            
+                            <tr style="border-bottom: 1px solid #e5e7eb;">
+                                <td style="padding: 12px;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <div style="width: 32px; height: 32px; background: #10b981; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold;">JG</div>
+                                        <div>
+                                            <div style="font-weight: 600;">Juan García</div>
+                                            <div style="font-size: 12px; color: #6b7280;">ID: 12346</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="padding: 12px;">
+                                    <span style="background: #fecaca; color: #dc2626; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">CIRUGÍA</span>
+                                </td>
+                                <td style="padding: 12px; font-family: monospace;">890278</td>
+                                <td style="padding: 12px;">
+                                    <div style="font-size: 13px;">
+                                        <div>consulta de</div>
+                                        <div>control de</div>
+                                        <div>cirugía general</div>
+                                    </div>
+                                </td>
+                                <td style="padding: 12px;">
+                                    <span style="background: #dcfce7; color: #16a34a; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">REALIZADO</span>
+                                </td>
+                                <td style="padding: 12px;">
+                                    <span style="font-size: 12px; color: #6b7280;">Ninguna</span>
+                                </td>
+                                <td style="padding: 12px; font-size: 13px;">10/01/2024</td>
+                                <td style="padding: 12px; font-size: 13px;">18/01/2024</td>
+                                <td style="padding: 12px; text-align: center; font-weight: 600;">8</td>
+                                <td style="padding: 12px;">
+                                    <div style="display: flex; gap: 4px;">
+                                        <button class="btn" style="padding: 6px 8px; background: #3b82f6; color: white; border-radius: 4px;">
+                                            <i class="fas fa-eye"></i>Ver
+                                        </button>
+                                        <button class="btn" style="padding: 6px 8px; background: #6b7280; color: white; border-radius: 4px;">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                            <tr style="border-bottom: 1px solid #e5e7eb;">
+                                <td style="padding: 12px;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <div style="width: 32px; height: 32px; background: #f59e0b; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold;">AL</div>
+                                        <div>
+                                            <div style="font-weight: 600;">Ana López</div>
+                                            <div style="font-size: 12px; color: #6b7280;">ID: 12347</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="padding: 12px;">
+                                    <span style="background: #e0e7ff; color: #3730a3; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">RADIOTERAPIA</span>
+                                </td>
+                                <td style="padding: 12px; font-family: monospace;">966004</td>
+                                <td style="padding: 12px;">
+                                    <div style="font-size: 13px;">
+                                        <div>consulta de primera vez por</div>
+                                        <div>especialista en oncología</div>
+                                        <div style="color: #6b7280; margin-top: 4px;">antígeno de</div>
+                                        <div style="color: #6b7280;">cáncer de mama</div>
+                                        <div style="color: #6b7280; margin-top: 4px;">15-3+determinación</div>
+                                        <div style="color: #6b7280;">sangre o</div>
+                                        <div style="color: #6b7280;">suero</div>
+                                    </div>
+                                </td>
+                                <td style="padding: 12px;">
+                                    <span style="background: #ddd6fe; color: #5b21b6; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">AGENDADO</span>
+                                </td>
+                                <td style="padding: 12px;">
+                                    <span style="font-size: 12px; color: #6b7280;">Demora en la agenda</span>
+                                </td>
+                                <td style="padding: 12px; font-size: 13px;">20/01/2024</td>
+                                <td style="padding: 12px; font-size: 13px;">25/01/2024</td>
+                                <td style="padding: 12px; text-align: center; font-weight: 600;">5</td>
+                                <td style="padding: 12px;">
+                                    <div style="display: flex; gap: 4px;">
+                                        <button class="btn" style="padding: 6px 8px; background: #3b82f6; color: white; border-radius: 4px;">
+                                            <i class="fas fa-eye"></i>Ver
+                                        </button>
+                                        <button class="btn" style="padding: 6px 8px; background: #6b7280; color: white; border-radius: 4px;">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </section>
-    </div><script>
-        // Inicialización del Dashboard
+    </div>
+
+    <script>
+        // Inicialización básica de gráficas
         document.addEventListener('DOMContentLoaded', function() {
-            initializeCharts();
-            initializeSidebar();
-            initializeFilters();
-        });
-
-        // Toggle Sidebar para móviles
-        function initializeSidebar() {
-            const menuToggle = document.querySelector('.menu-toggle');
-            const sidebar = document.querySelector('.sidebar');
-            
-            menuToggle?.addEventListener('click', function() {
-                sidebar.classList.toggle('open');
-            });
-            
-            // Cerrar sidebar al hacer click fuera en móvil
-            document.addEventListener('click', function(e) {
-                if (window.innerWidth <= 968 && !sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
-                    sidebar.classList.remove('open');
-                }
-            });
-        }
-
-        // Inicializar filtros
-        function initializeFilters() {
-            const form = document.querySelector('.filters');
-            const clearButton = form?.querySelector('.btn.ghost');
-            
-            clearButton?.addEventListener('click', function(e) {
-                e.preventDefault();
-                form.reset();
-                // Aquí podrías disparar una actualización de datos
-                console.log('Filtros limpiados');
-            });
-        }
-
-        // Inicializar gráficas
-        function initializeCharts() {
-            // Configuración común para los colores Vidanova
-            const vidanovaColors = {
-                primary: '#183ad6',
-                secondary: '#3D54A1',
-                tertiary: '#2f5f98',
-                dark: '#0F2D47',
-                purple: '#8f4392',
-                pink: '#cc9cc8',
-                gray: '#706f6f',
-                grayLight: '#888888'
-            };
-
-            // Gráfica de Estado de Solicitudes (Pie Chart)
+            // Gráfica de Estado (Donut)
             const statusCtx = document.getElementById('statusChart')?.getContext('2d');
             if (statusCtx) {
                 new Chart(statusCtx, {
                     type: 'doughnut',
                     data: {
-                        labels: ['Realizados', 'Agendados', 'Pendientes', 'En Gestión', 'Por Gestionar'],
+                        labels: ['Pendiente', 'Agendado', 'Realizado', 'Por Gestionar'],
                         datasets: [{
-                            data: [89, 42, 25, 15, 10],
-                            backgroundColor: [
-                                vidanovaColors.primary,
-                                vidanovaColors.tertiary,
-                                '#f59e0b',
-                                vidanovaColors.purple,
-                                '#ef4444'
-                            ],
-                            borderWidth: 3,
-                            borderColor: '#ffffff',
-                            hoverBorderWidth: 5
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'bottom',
-                                labels: {
-                                    padding: 20,
-                                    usePointStyle: true,
-                                    font: {
-                                        size: 12,
-                                        weight: '600'
-                                    }
-                                }
-                            },
-                            tooltip: {
-                                backgroundColor: vidanovaColors.dark,
-                                titleColor: '#ffffff',
-                                bodyColor: '#ffffff',
-                                borderColor: vidanovaColors.primary,
-                                borderWidth: 2,
-                                cornerRadius: 8,
-                                displayColors: true,
-                                callbacks: {
-                                    label: function(context) {
-                                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                        const percentage = ((context.parsed / total) * 100).toFixed(1);
-                                        return `${context.label}: ${context.parsed} (${percentage}%)`;
-                                    }
-                                }
-                            }
-                        },
-                        cutout: '60%',
-                        animation: {
-                            animateScale: true,
-                            duration: 1500,
-                            easing: 'easeInOutCubic'
-                        }
-                    }
-                });
-            }
-
-            // Gráfica de Oportunidad por Procedimiento (Bar Chart)
-            const opCtx = document.getElementById('opChart')?.getContext('2d');
-            if (opCtx) {
-                new Chart(opCtx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Oncología', 'Cirugía', 'Radioterapia', 'Quimioterapia', 'Consulta'],
-                        datasets: [{
-                            label: 'Días promedio',
-                            data: [7.2, 5.8, 8.1, 6.3, 4.2],
-                            backgroundColor: [
-                                vidanovaColors.primary,
-                                vidanovaColors.purple,
-                                vidanovaColors.tertiary,
-                                vidanovaColors.pink,
-                                vidanovaColors.secondary
-                            ],
-                            borderColor: [
-                                vidanovaColors.primary,
-                                vidanovaColors.purple,
-                                vidanovaColors.tertiary,
-                                vidanovaColors.pink,
-                                vidanovaColors.secondary
-                            ],
-                            borderWidth: 2,
-                            borderRadius: 8,
-                            borderSkipped: false
+                            data: [25, 42, 89, 10],
+                            backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444']
                         }]
                     },
                     options: {
@@ -547,142 +476,43 @@
                         plugins: {
                             legend: {
                                 display: false
-                            },
-                            tooltip: {
-                                backgroundColor: vidanovaColors.dark,
-                                titleColor: '#ffffff',
-                                bodyColor: '#ffffff',
-                                borderColor: vidanovaColors.primary,
-                                borderWidth: 2,
-                                cornerRadius: 8,
-                                callbacks: {
-                                    label: function(context) {
-                                        return `Promedio: ${context.parsed.y} días`;
-                                    }
-                                }
                             }
-                        },
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                grid: {
-                                    color: '#e2e8f0',
-                                    drawBorder: false
-                                },
-                                ticks: {
-                                    color: vidanovaColors.gray,
-                                    font: {
-                                        size: 11,
-                                        weight: '500'
-                                    },
-                                    callback: function(value) {
-                                        return value + ' días';
-                                    }
-                                }
-                            },
-                            x: {
-                                grid: {
-                                    display: false
-                                },
-                                ticks: {
-                                    color: vidanovaColors.gray,
-                                    font: {
-                                        size: 11,
-                                        weight: '600'
-                                    },
-                                    maxRotation: 45
-                                }
-                            }
-                        },
-                        animation: {
-                            duration: 1500,
-                            easing: 'easeInOutCubic'
-                        },
-                        interaction: {
-                            intersect: false,
-                            mode: 'index'
                         }
                     }
                 });
             }
-        }
 
-        // Funciones auxiliares para actualización dinámica de datos
-        function updateKPIs(data) {
-            // Actualizar valores KPI dinámicamente
-            document.querySelector('.kpi.blue .kpi-value').textContent = data.totalOrdenar || '156';
-            document.querySelector('.kpi.purple .kpi-value').textContent = data.realizados || '89';
-            document.querySelector('.kpi.teal .kpi-value').textContent = data.agendados || '42';
-            document.querySelector('.kpi.pink .kpi-value').textContent = data.pendientes || '25';
-            document.querySelector('.kpi.gray .kpi-value').textContent = data.promedioDias || '7.2';
-        }
-
-        // Función para mostrar estado de carga
-        function showLoading(elementId) {
-            const element = document.getElementById(elementId);
-            if (element) {
-                element.innerHTML = `
-                    <div class="chart-loading">
-                        <div class="loading-spinner"></div>
-                        <span style="margin-left: 1rem;">Cargando datos...</span>
-                    </div>
-                `;
-            }
-        }
-
-        // Simular carga de datos (reemplazar con llamadas reales a la API)
-        function loadDashboardData() {
-            // Mostrar loading
-            showLoading('statusChart');
-            showLoading('opChart');
-            
-            // Simular delay de API
-            setTimeout(() => {
-                initializeCharts();
-            }, 1500);
-        }
-
-        // Event listeners adicionales
-        document.addEventListener('DOMContentLoaded', function() {
-            // Animaciones de entrada para las cards KPI
-            const kpiCards = document.querySelectorAll('.kpi');
-            kpiCards.forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                
-                setTimeout(() => {
-                    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, index * 100);
-            });
-
-            // Tooltips para botones de acción
-            const actionButtons = document.querySelectorAll('.btn-icon');
-            actionButtons.forEach(button => {
-                button.addEventListener('mouseenter', function() {
-                    const title = this.getAttribute('title');
-                    if (title) {
-                        // Aquí podrías implementar tooltips personalizados
-                        console.log('Tooltip:', title);
+            // Gráfica de Procedimientos (Bar)
+            const procedureCtx = document.getElementById('procedureChart')?.getContext('2d');
+            if (procedureCtx) {
+                new Chart(procedureCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Oncología', 'Cirugía', 'Radioterapia', 'Quimioterapia', 'Consulta', 'Imágenes', 'Lab', 'Patología'],
+                        datasets: [{
+                            label: 'Días promedio',
+                            data: [7.2, 5.8, 8.1, 6.3, 4.2, 5.5, 3.8, 6.9],
+                            backgroundColor: ['#3b82f6', '#dc2626', '#3730a3', '#059669', '#d97706', '#7c3aed', '#0891b2', '#be185d']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
                     }
-                });
-            });
-
-            // Búsqueda en tiempo real para la tabla (si necesitas implementarla)
-            const searchInput = document.querySelector('#searchInput'); // Si agregas un input de búsqueda
-            if (searchInput) {
-                searchInput.addEventListener('input', function() {
-                    const searchTerm = this.value.toLowerCase();
-                    const tableRows = document.querySelectorAll('.vn-table tbody tr');
-                    
-                    tableRows.forEach(row => {
-                        const text = row.textContent.toLowerCase();
-                        row.style.display = text.includes(searchTerm) ? '' : 'none';
-                    });
                 });
             }
         });
     </script>
 </body>
 </html>
+{% endblock %}

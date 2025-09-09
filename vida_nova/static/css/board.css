@@ -8,11 +8,23 @@ body {
   color: #333;
 }
 
+/* Header */
 .header {
   text-align: center;
   padding: 1.5rem;
 }
+.header h1 {
+  font-size: 2rem;
+  color: #183ad6;
+  margin-bottom: 0.5rem;
+}
+.header .subtitle {
+  font-size: 1.1rem;
+  color: #706f6f;
+  margin-bottom: 1rem;
+}
 
+/* Stats indicadores */
 .stats {
   display: flex;
   justify-content: center;
@@ -20,114 +32,159 @@ body {
   margin-top: 1rem;
   flex-wrap: wrap;
 }
-
 .stat {
-  padding: 0.5rem 1rem;
+  padding: 0.8rem 1.2rem;
   border-radius: 12px;
   font-size: 1.2rem;
   font-weight: bold;
   color: #fff;
+  min-width: 170px;
   text-align: center;
-  min-width: 100px;
 }
-
 .stat span {
   display: block;
   font-size: 0.8rem;
   font-weight: normal;
 }
+.stat.red { background: #e74c3c; }
+.stat.yellow { background: #f1c40f; color: #000; }
+.stat.green { background: #27ae60; }
+.stat.blue { background: #2f5f98; }
 
-.red { background: #e74c3c; }
-.yellow { background: #f1c40f; color: #000; }
-.green { background: #27ae60; }
-.blue { background: #8e9cff; }
-
+/* Buscador */
 .search {
-  text-align: center;
-  margin: 1rem 0;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
 }
-
 .search input {
-  width: 60%;
-  padding: 0.7rem;
+  width: 50%;
+  max-width: 400px;
+  padding: 0.7rem 1rem;
   border-radius: 20px;
-  border: 1px solid #ccc;
+  border: 1px solid #183ad6;
   font-size: 1rem;
+  background: #fff;
+}
+.search input:focus {
+  border: 2px solid #8f4392;
+  outline: none;
+}
+.search .btn {
+  padding: 0.7rem 1.2rem;
+  border-radius: 20px;
+  background: #183ad6;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+.search .btn:hover {
+  background: #8f4392;
 }
 
+/* Cards */
 .cards {
-  max-width: 900px;
-  margin: auto;
   display: grid;
-  gap: 1.5rem;
-  padding: 1rem;
+  gap: 1.2rem;
+  grid-template-columns: 1fr;
+  max-width: 950px;
+  margin: auto;
+  padding: 0.5rem;
 }
-
 .card {
   background: #fff;
-  border-radius: 12px;
-  padding: 1rem;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  border-radius: 16px;
+  padding: 1rem 1.2rem;
+  box-shadow: 0 4px 16px rgba(24,58,214,0.08);
+  margin-bottom: 1.2rem;
+  transition: box-shadow 0.2s;
 }
-
-.card header {
-  margin-bottom: 1rem;
+.card:hover {
+  box-shadow: 0 8px 24px rgba(24,58,214,0.18);
 }
-
 .card header h2 {
+  font-size: 1.3rem;
+  color: #0F2D47;
   margin: 0;
 }
-
+.card header p {
+  color: #555;
+  font-size: 1rem;
+}
 .badge {
   display: inline-block;
   padding: 0.3rem 0.7rem;
   border-radius: 8px;
   font-size: 0.8rem;
   font-weight: bold;
+  margin-top: 0.5rem;
 }
-
 .badge.red { background: #ffcccc; color: #b30000; }
 .badge.yellow { background: #fff3cd; color: #856404; }
 
-.content {
+/* Contenido */
+.content.columns {
   display: flex;
-  gap: 2rem;
+  gap: 1rem;
   flex-wrap: wrap;
 }
-
 .column {
   flex: 1;
-  min-width: 250px;
+  min-width: 220px;
 }
-
 .column h3 {
   margin-top: 0.5rem;
-  font-size: 1rem;
-  border-bottom: 1px solid #ddd;
+  font-size: 1.05rem;
+  color: #3D54A1;
+  margin-bottom: 0.3rem;
+  border-bottom: 1px solid #eee;
   padding-bottom: 0.2rem;
 }
-
-ul {
+.column ul {
   margin: 0.3rem 0 1rem;
   padding-left: 1rem;
+  color: #444;
 }
+.column li { margin-bottom: 0.3rem; }
 
+/* Footer card */
+.card footer {
+  text-align: right;
+  margin-top: 1rem;
+}
 .btn {
-  background: #007bff;
+  background: #183ad6;
   color: #fff;
   padding: 0.6rem 1.2rem;
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
+.btn:hover { background: #8f4392; }
 
-.btn:hover {
-  background: #0056b3;
-}
-
+/* Footer general */
 .footer {
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: #555;
-  padding: 1rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid #eee;
+}
+
+/* Accesibilidad */
+.card[tabindex="0"]:focus {
+  outline: 2px solid #183ad6;
+  box-shadow: 0 0 0 4px #8f439233;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .content.columns { flex-direction: column; }
+  .search input { width: 90%; }
 }

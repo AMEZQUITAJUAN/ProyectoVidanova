@@ -1,103 +1,111 @@
 {% extends 'layout.html' %}
 {% load static %}
 
-{% block title %}Pagina inicial{% endblock %}
+{% block title %}{% endblock %}
 
 {% block content %}
-  <header class="header">
-    <h1>📊 Tablero de control:</h1>
-    <article class="card danger"> 
-      <p>Sistema de seguimiento</p>
-      <div class="stats">
-        <div class="stat red">2<br><span>Alerta Crítica</span></div>
-        <div class="stat yellow">3<br><span>Advertencia</span></div>
-        <div class="stat green">4<br><span>En Tiempo</span></div>
-        <div class="stat blue">9<br><span>Total Casos</span></div>
+<link rel="stylesheet" href="{% static 'css/board.css' %}">
+
+<h1>📋 Estado genera de los pacientes:</h1>
+<header class="header">
+  
+
+  <!-- Indicadores principales -->
+
+  <div class="stats">
+    
+    <div class="stat red">2 <span>Críticos</span></div>
+    <div class="stat yellow">3 <span>Advertencia</span></div>
+    <div class="stat green">4 <span>En Tiempo</span></div>
+    <div class="stat blue">9 <span>Total Casos</span></div>
+    
+  </div>
+
+</header>
+
+<!-- Buscador -->
+ 
+<section class="search">
+  <input type="text" placeholder="🔍 Buscar paciente, caso o procedimiento" aria-label="Buscar">
+  <button class="btn" title="Buscar"><i class="bx bx-search"></i></button>
+</section>
+
+<!-- Cards de pacientes -->
+<main class="cards">
+
+  <!-- Paciente Crítico -->
+  <article class="card danger" tabindex="0">
+    <header>
+      <h2>🧑 Mario Gonzáles</h2>
+      <p>Captación: <strong>2025-04-06</strong> • ⏳ <strong>12 días</strong></p>
+      <span class="badge red">Crítico Supera 5 días para primera consulta</span>
+    </header>
+    <div class="content columns">
+      <div class="column">
+        <h3>📋 Resumen Médico</h3>
+        <ul>
+          <li><strong>Tipo de Caso:</strong> Urgencia Oncológica</li>
+          <li><strong>Procedimiento:</strong> Quimioterapia</li>
+        </ul>
+        <h3>🏥 Prestador</h3>
+        <ul>
+          <li><strong>Institución:</strong> OncoSalud</li>
+          <li><strong>Barreras:</strong> Administrativas</li>
+        </ul>
       </div>
-    </article>  
-  </header>
-
-  <section class="search">
-    <input type="text" placeholder="🔍 Buscar Paciente o Tipo de caso">
-  </section>
-
-  <main class="cards">
-    <!-- Tarjeta Paciente -->
-    <article class="card danger">
-      <header>
-        <h2>🧑 Mario Gonzáles</h2>
-        <p>Captación 2025-04-06 • ⏳ 12 Días</p>
-        <span class="badge red">Crítico: Supera 5 días para primera consulta</span>
-      </header>
-      <div class="content">
-        <div class="column">
-          <h3>📋 Resumen del Caso Médico</h3>
-          <ul>
-            <li>Tipo de Caso: Urgencia Oncológica</li>
-            <li>Tipo de Procedimiento: Quimioterapia</li>
-          </ul>
-          <h3>🏥 Información del Prestador</h3>
-          <ul>
-            <li>Prestador: OncoSalud</li>
-            <li>Barreras: Administrativas</li>
-          </ul>
-        </div>
-        <div class="column">
-          <h3>📌 Estado del Proceso</h3>
-          <ul>
-            <li>Solicitud: Pendiente</li>
-            <li>Fecha Programada: 2025-04-20</li>
-          </ul>
-          <h3>🛤 Seguimiento y Ruta</h3>
-          <ul>
-            <li>En proceso de asignación</li>
-          </ul>
-        </div>
+      <div class="column">
+        <h3>📌 Estado</h3>
+        <ul>
+          <li><strong>Solicitud:</strong> Pendiente</li>
+          <li><strong>Fecha Programada:</strong> 2025-04-20</li>
+        </ul>
+        <h3>🛤 Ruta</h3>
+        <ul>
+          <li>En proceso de asignación</li>
+        </ul>
       </div>
-      <footer>
-        <button class="btn">Ver Historia</button>
-      </footer>
-    </article>
+    </div>
+    <footer>
+      <button class="btn"><i class="bx bx-folder-open"></i> Ver Historia</button>
+    </footer>
+  </article>
 
-    <!-- Otra tarjeta -->
-    <article class="card warning">
-      <header>
-        <h2>🧑 Mario Gonzáles</h2>
-        <p>Captación 2025-04-06 • ⏳ 12 Días</p>
-        <span class="badge yellow">Alerta: Supera 5 días para primera consulta</span>
-      </header>
-      <div class="content">
-        <div class="column">
-          <h3>📋 Resumen del Caso Médico</h3>
-          <ul>
-            <li>Tipo de Caso: Urgencia Oncológica</li>
-            <li>Tipo de Procedimiento: Radioterapia</li>
-          </ul>
-          <h3>🏥 Información del Prestador</h3>
-          <ul>
-            <li>Prestador: SaludVida</li>
-            <li>Barreras: Ninguna</li>
-          </ul>
-        </div>
-        <div class="column">
-          <h3>📌 Estado del Proceso</h3>
-          <ul>
-            <li>Solicitud: Aprobada</li>
-            <li>Fecha Programada: 2025-04-22</li>
-          </ul>
-          <h3>🛤 Seguimiento y Ruta</h3>
-          <ul>
-            <li>Consulta en clínica asignada</li>
-          </ul>
-        </div>
+  <!-- Paciente en Advertencia -->
+  <article class="card warning" tabindex="0">
+    <header>
+      <h2>🧑 Laura Ramírez</h2>
+      <p>Captación: <strong>2025-04-10</strong> • ⏳ <strong>7 días</strong></p>
+      <span class="badge yellow">Advertencia Supera 5 días para primera consulta</span>
+    </header>
+    <div class="content columns">
+      <div class="column">
+        <h3>📋 Resumen Médico</h3>
+        <ul>
+          <li><strong>Tipo de Caso:</strong> Control Post-quirúrgico</li>
+          <li><strong>Procedimiento:</strong> Radioterapia</li>
+        </ul>
+        <h3>🏥 Prestador</h3>
+        <ul>
+          <li><strong>Institución:</strong> SaludVida</li>
+          <li><strong>Barreras:</strong> Ninguna</li>
+        </ul>
       </div>
-      <footer>
-        <button class="btn">Ver Historia</button>
-      </footer>
-    </article>
-  </main>
+      <div class="column">
+        <h3>📌 Estado</h3>
+        <ul>
+          <li><strong>Solicitud:</strong> Aprobada</li>
+          <li><strong>Fecha Programada:</strong> 2025-04-22</li>
+        </ul>
+        <h3>🛤 Ruta</h3>
+        <ul>
+          <li>Consulta en clínica asignada</li>
+        </ul>
+      </div>
+    </div>
+    <footer>
+      <button class="btn"><i class="bx bx-folder-open"></i> Ver Historia</button>
+    </footer>
+  </article>
 
-  <footer class="footer">
-    <p>📌 Tipo de Caso • Tipo de Procedimiento • Estado de la Solicitud • Fecha de Solicitud • Fecha de Cita Programada • Prestador del Servicio • Barreras Identificadas • Observaciones Relevantes • Ruta Asistencial • Mes de Registro</p>
-  </footer>
+</main>
 {% endblock %}
