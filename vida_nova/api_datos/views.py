@@ -1,9 +1,17 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from .models import Paciente
-from .serialezers import PacienteSerializer
+# api_datos/views.py
 
-class pacientelistView(APIView):
+from rest_framework.views import APIView
+from rest_framework.response import Response  # ✅ Correcto
+from .models import Paciente
+from .serializers import PacienteSerializer  # ✅ correcto
+
+import requests
+from django.shortcuts import render
+from requests.exceptions import RequestException
+
+
+# 🔹 API REST con Django REST Framework
+class PacienteListView(APIView):
     def get(self, request):
         pacientes = Paciente.objects.all()
         serializer = PacienteSerializer(pacientes, many=True)
@@ -17,4 +25,15 @@ class pacientelistView(APIView):
         return Response(serializer.errors, status=400)
 
 
-# Create your views here.
+# 🔹 Vista para consumir la API y mostrar HTML
+def consumir_api(request):
+    try:
+        response = requests.get("http://localhost:8000/api/")
+        response.raise_for_status()
+        pacientes = response.json()
+    except RequestException as e:
+        print("Error al consumir la API:", e)
+        pacientes = []
+
+    return render(request, "api_datos/pacientes.html", {"pacientes": pacientes})
+
