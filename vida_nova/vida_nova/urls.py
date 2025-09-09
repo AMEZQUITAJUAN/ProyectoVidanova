@@ -13,4 +13,6 @@ urlpatterns = [
     path('doctors/', include('doctors.urls')),
     path('mensajes/', include('mensajes.urls')),
     path('adminboard/', include('adminboard.urls')),
+    path('api/', view.consumir_api, name='consumir_api'),
+    path('api/patients/', include('api_datos.urls')),
 ]

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Datos optenidosde la API</h1>
+    <ul>
+        {% for item in data %}
+            <li>{{ item.title }}</li>
+        {% endfor %}
+    </ul>
+    {% if error %}
+        <p style="color: red;">Error al obtener los datos: {{ error }}</p>
+    {% endif %}
+</body>
+</html>
