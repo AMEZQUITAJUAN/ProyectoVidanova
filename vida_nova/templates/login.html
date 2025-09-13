@@ -57,7 +57,8 @@
                     <p>Accede a tu cuenta profesional</p>
                 </div>
 
-                <form id="loginForm" class="login-form">
+                <form id="loginForm" class="login-form" method="POST" action="{% url 'login' %}">
+                    {% csrf_token %}
                     <div class="form-group">
                         <label for="username">
                             <i class="fas fa-user"></i>
