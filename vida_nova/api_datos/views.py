@@ -35,5 +35,17 @@ def consumir_api(request):
         print("Error al consumir la API:", e)
         pacientes = []
 
-    return render(request, "api_datos/pacientes.html", {"pacientes": pacientes})
+    total_pacientes = len(pacientes)
+    pacientes_cirugia = [p for p in pacientes if p.get('procedmiento', '').lower() == 'cirugía']
+    porcentaje_cirugia = (len(pacientes_cirugia) / total_pacientes * 100) if total_pacientes > 0 else 0
+
+    return render(
+        request,
+        "api_datos/pacientes.html",
+        {
+            "pacientes": pacientes,
+            "total_pacientes": total_pacientes,
+            "porcentaje_cirugia": porcentaje_cirugia
+        }
+    )
 
