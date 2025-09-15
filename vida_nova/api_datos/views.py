@@ -28,7 +28,7 @@ class PacienteListView(APIView):
 # 🔹 Vista para consumir la API y mostrar HTML
 def consumir_api(request):
     try:
-        response = requests.get("http://localhost:8000/api/")
+        response = requests.get("http://localhost:8001/api/")
         response.raise_for_status()
         pacientes = response.json()
     except RequestException as e:
