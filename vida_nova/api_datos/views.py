@@ -1,16 +1,16 @@
 # api_datos/views.py
 
 from rest_framework.views import APIView
-from rest_framework.response import Response  # ✅ Correcto
+from rest_framework.response import Response  
 from .models import Paciente
-from .serializers import PacienteSerializer  # ✅ correcto
+from .serializers import PacienteSerializer
 
 import requests
 from django.shortcuts import render
 from requests.exceptions import RequestException
 
 
-# 🔹 API REST con Django REST Framework
+
 class PacienteListView(APIView):
     def get(self, request):
         pacientes = Paciente.objects.all()
@@ -25,27 +25,15 @@ class PacienteListView(APIView):
         return Response(serializer.errors, status=400)
 
 
-# 🔹 Vista para consumir la API y mostrar HTML
+
 def consumir_api(request):
     try:
-        response = requests.get("http://localhost:8001/api/")
+        response = requests.get("http://localhost:8000/api/")
         response.raise_for_status()
         pacientes = response.json()
     except RequestException as e:
         print("Error al consumir la API:", e)
         pacientes = []
 
-    total_pacientes = len(pacientes)
-    pacientes_cirugia = [p for p in pacientes if p.get('procedmiento', '').lower() == 'cirugía']
-    porcentaje_cirugia = (len(pacientes_cirugia) / total_pacientes * 100) if total_pacientes > 0 else 0
-
-    return render(
-        request,
-        "api_datos/pacientes.html",
-        {
-            "pacientes": pacientes,
-            "total_pacientes": total_pacientes,
-            "porcentaje_cirugia": porcentaje_cirugia
-        }
-    )
+    return render(request, "api_datos/pacientes.html", {"pacientes": pacientes})
 

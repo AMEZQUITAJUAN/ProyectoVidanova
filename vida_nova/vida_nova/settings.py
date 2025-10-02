@@ -45,6 +45,9 @@ INSTALLED_APPS = [
     'mensajes',
     'adminboard',
     'api_datos',
+    'datarepo',
+    'rest_framework',
+    'import_export',
 ]
 
 MIDDLEWARE = [
