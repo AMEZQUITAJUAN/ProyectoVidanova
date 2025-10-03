@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'adminboard',
     'api_datos',
     'datarepo',
-    'rest_framework',
     'import_export',
 ]
 
