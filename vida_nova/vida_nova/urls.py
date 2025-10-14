@@ -14,4 +14,5 @@ urlpatterns = [
     path('mensajes/', include('mensajes.urls')),
     path('adminboard/', include('adminboard.urls')),
     path('api/', include('api_datos.urls')),  # Esto incluye /api/patients/ y /api/pacientes/
+    path('register/', include('register.urls')),  # Esto incluye /register/
 ]
