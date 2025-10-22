@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'api_datos',
     'datarepo',
     'import_export',
+    'register',
 ]
 
 MIDDLEWARE = [
